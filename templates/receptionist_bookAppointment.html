@@ -1,6 +1,6 @@
 {% extends 'receptionist_base.html' %} {% load static %} {% block body %}
 
-<link href="{% static 'assets/rp/vendors/select2/select2.min.css' %}" />
+<link href="{% static 'assets/rp/vendors/select2/select2.min.css' %}" rel="stylesheet" />
 <div class="col-12 grid-margin">
   <div class="card">
     <div class="card-body">
@@ -22,6 +22,7 @@
                   class="form-control form-control-lg"
                   value="{{ patient.patient_id }}"
                   name="patient_id"
+                  readonly
                 />
               </div>
             </div>
@@ -50,6 +51,7 @@
                   type="text"
                   class="form-control form-control-lg"
                   value="{{ patient.patient_id }}"
+                  readonly
                 />
               </div>
             </div>
@@ -114,9 +116,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="pstate"
-                >Mobile Number</label
-              >
+              <label class="col-sm-3 col-form-label" for="pstate">Mobile Number</label>
               <div class="col-sm-9">
                 <input
                   type="text"
@@ -155,8 +155,9 @@
                   id="doctor_select"
                   name="doctorname"
                   onchange="calculateInvoice()"
-                ></select>
-                <option value="">Select Doctor</option>
+                >
+                  <!-- <option value="">Select Doctor</option> -->
+                </select>
               </div>
             </div>
           </div>
@@ -165,16 +166,9 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label"
-                >Doctor Fee (without GST):</label
-              >
-              <div class="col-sm-9">
-                <span
-                  type="text"
-                  class="form-control form-control-lg"
-                  id="fee_without_gst"
-                  name="docfee"
-                ></span>
+              <label class="col-sm-6 col-form-label">Doctor Fee (without GST):</label>
+              <div class="col-sm-6">
+                <span class="form-control form-control-lg" id="fee_without_gst"></span>
               </div>
             </div>
           </div>
@@ -182,36 +176,20 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">GST Amount:</label>
               <div class="col-sm-9">
-                <span
-                  class="form-control form-control-lg"
-                  id="gst_amount"
-                  type="text"
-                  name="gst"
-                  required
-                ></span>
+                <span class="form-control form-control-lg" id="gst_amount"></span>
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label"
-                >Total Fee (including GST):</label
-              >
-              <div class="col-sm-9">
-                <span
-                  class="form-control form-control-lg"
-                  id="total_fee"
-                  type="text"
-                  name="total_amount"
-                  required
-                ></span>
+              <label class="col-sm-6 col-form-label">Total Fee (including GST):</label>
+              <div class="col-sm-6">
+                <span class="form-control form-control-lg" id="total_fee"></span>
               </div>
             </div>
           </div>
         </div>
-        <button class="btn btn-danger btn-lg" type="submit">
-          Book Appointment
-        </button>
+        <button class="btn btn-danger btn-lg" type="submit">Book Appointment</button>
       </form>
     </div>
   </div>
@@ -220,36 +198,36 @@
   function populateDoctors() {
     var patientType = document.getElementById("patient_type").value;
     var doctorDropdown = document.getElementById("doctor_select");
-    doctorDropdown.innerHTML = "";
+    doctorDropdown.innerHTML = '<option value="">Select Doctor</option>'; // Reset the dropdown
 
+    var doctors = [];
     if (patientType === "ODP") {
-      var doctors = [
+      doctors = [
         { name: "Doctor A", fee: 100 },
         { name: "Doctor B", fee: 200 },
         { name: "Doctor C", fee: 300 },
       ];
     } else if (patientType === "PD") {
-      var doctors = [
+      doctors = [
         { name: "Doctor D", fee: 150 },
         { name: "Doctor E", fee: 250 },
         { name: "Doctor F", fee: 350 },
       ];
     } else if (patientType === "SD") {
-      var doctors = [
+      doctors = [
         { name: "Doctor G", fee: 200 },
         { name: "Doctor H", fee: 300 },
         { name: "Doctor I", fee: 400 },
       ];
     }
 
-    for (var i = 0; i < doctors.length; i++) {
+    doctors.forEach(function(doctor) {
       var option = document.createElement("option");
-      option.value = doctors[i].fee; // Set fee as the option value
-      option.text = doctors[i].name;
+      option.value = doctor.fee;
+      option.text = doctor.name;
       doctorDropdown.add(option);
-    }
+    });
 
-    // Call calculateInvoice to update the fee display
     calculateInvoice();
   }
 
@@ -257,17 +235,21 @@
     var doctorFee = document.getElementById("doctor_select").value;
     var gstRate = 18;
 
-    var feeWithoutGST = parseFloat(doctorFee);
-    var gstAmount = (feeWithoutGST * gstRate) / 100;
-    var totalFee = feeWithoutGST + gstAmount;
+    if (doctorFee) {
+      var feeWithoutGST = parseFloat(doctorFee);
+      var gstAmount = (feeWithoutGST * gstRate) / 100;
+      var totalFee = feeWithoutGST + gstAmount;
 
-    document.getElementById("fee_without_gst").innerHTML =
-      feeWithoutGST.toFixed(2);
-    document.getElementById("gst_amount").innerHTML = gstAmount.toFixed(2);
-    document.getElementById("total_fee").innerHTML = totalFee.toFixed(2);
+      document.getElementById("fee_without_gst").innerHTML = feeWithoutGST.toFixed(2);
+      document.getElementById("gst_amount").innerHTML = gstAmount.toFixed(2);
+      document.getElementById("total_fee").innerHTML = totalFee.toFixed(2);
+    } else {
+      document.getElementById("fee_without_gst").innerHTML = "";
+      document.getElementById("gst_amount").innerHTML = "";
+      document.getElementById("total_fee").innerHTML = "";
+    }
   }
-</script>
-<script>
+
   window.onload = function () {
     var today = new Date().toISOString().split("T")[0];
     var dateInput = document.getElementsByName("visitingdate")[0];
