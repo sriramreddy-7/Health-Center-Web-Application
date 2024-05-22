@@ -1,0 +1,411 @@
+{% extends 'consultantDoctor_base.html' %} {% load static %} {% block body %}
+<title>CCHC Consultant Doctor Dashboard</title>
+<link
+  rel="stylesheet"
+  href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384-B4gt1WFcPx6+ZqVlG4rOJ9gjj40d8H7z4k4vDr3Y5t5+3hV4T2y8G8CkCUXzT7Ms"
+  crossorigin="anonymous"
+/>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<style>
+  [data-role="dynamic-fields"] > .form-inline + .form-inline {
+    margin-top: 0.5em;
+  }
+
+  [data-role="dynamic-fields"] > .form-inline [data-role="add"] {
+    display: none;
+  }
+
+  [data-role="dynamic-fields"] > .form-inline:last-child [data-role="add"] {
+    display: inline-block;
+  }
+
+  [data-role="dynamic-fields"] > .form-inline:last-child [data-role="remove"] {
+    display: none;
+  }
+</style>
+<div class="col-md-12">
+  <div class="card shadow mb-4">
+    <div class="card-header">
+      <strong class="card-title"
+        >CCHC In Patient {{pd.patient_id}} Diagonise Form
+        {{ad.appointment_id}}</strong
+      >
+    </div>
+    <div class="card-body">
+      <form action="#" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="patient_token">Patient Token Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="patient_token"
+              value="{{ad.patient_token}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="patient_id">Patient ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputPassword5"
+              name="patient_id"
+              value="{{pd.patient_id}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="patient_name">Patient Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="patient_name"
+              value="{{pd.patient_name}}"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="gender">Gender</label>
+            <input
+              type="text"
+              class="form-control"
+              id="gender"
+              value="{{pd.patient_gender}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="dob">Date of Birth</label>
+            <input
+              type="text"
+              class="form-control"
+              id="dob"
+              value="{{pd.patient_dob}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="age">Age</label>
+            <input
+              type="text"
+              class="form-control"
+              id="age"
+              value="{{pd.patient_age}}"
+              readonly
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="height">Height</label>
+            <input
+              type="text"
+              class="form-control"
+              id="height"
+              name="height"
+              placeholder="{{ phr.height }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="weight">Weight</label>
+            <input
+              type="text"
+              class="form-control"
+              id="weight"
+              name="weight"
+              placeholder="{{ phr.weight }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="bp">BP</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bp"
+              name="bp"
+              placeholder="{{ phr.bp }}"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="pulse">Pulse</label>
+            <input
+              type="text"
+              class="form-control"
+              id="pulse"
+              name="pulse"
+              placeholder="{{ phr.pulse }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="is_diabetic">IS Diabetic</label>
+            <input
+              type="text"
+              class="form-control"
+              id="is_diabetic"
+              name="is_diabetic"
+              placeholder="{{ phr.is_diabetic }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="diabetic_level">Enter Sugar Level</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bp"
+              name="diabetic_level"
+              placeholder="{{ phr.diabetic_level }}"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="remarks">Remarks</label>
+          <input
+            type="text"
+            class="form-control"
+            id="remarks"
+            name="remarks"
+            placeholder="{{ phr.remarks }}"
+            readonly
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="pov">Purpose Of Visit</label>
+            <select class="form-control" name="pov" id="pov">
+              <option value="{{phr.pov}}" selected>{{phr.pov}}</option>
+              <!-- <option value="General Checkup" disabled>General Checkup</option>
+                              <option value="Abnormal Pain" disabled>Abnormal Pain</option> -->
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="phi">Previous Health Issues</label>
+            <input
+              type="text"
+              class="form-control"
+              id="phi"
+              name="phi"
+              placeholder="{{ phr.phi }}"
+              readonly
+            />
+            <!--<select class="form-control select2-multi" id="phi" name="phi">-->
+            <!--  <optgroup label=" Respiratory and Neurological Health Issues">-->
+            <!--    <option value="Asthma">Asthma</option>-->
+            <!--    <option value="Migraine headaches">Migraine headaches</option>-->
+            <!--  </optgroup>-->
+            <!--  <optgroup label="Metabolic and Chronic Conditions">-->
+            <!--    <option value="Hypertension (High Blood Pressure)">Hypertension (High Blood Pressure)</option>-->
+            <!--    <option value="Type 2 Diabetes">Type 2 Diabetes</option>-->
+            <!--    <option value="Osteoarthritis">Osteoarthritis</option>-->
+            <!--    <option value="Gastroesophageal Reflux Disease (GERD)">Gastroesophageal Reflux Disease (GERD)</option>-->
+            <!--    <option value="Depression">Depression </option>-->
+            <!--    <option value="Coronary Artery Disease">Coronary Artery Disease</option>-->
+            <!--    <option value="Thyroid Disorder">Thyroid Disorder</option>-->
+            <!--    <option value="Chronic Kidney Disease">Chronic Kidney Disease </option>-->
+
+            <!--  </optgroup>-->
+            <!--</select>-->
+          </div>
+          <a
+            href="/consultant_doctor/consultantDoctor_precribeTest/{{ad.appointment_id}}/"
+            class="btn mb-2 btn-primary"
+            type="button"
+            >Precribe Test</a
+          >
+          &nbsp; &nbsp;
+          <button
+            type="button"
+            class="btn mb-2 btn-secondary"
+            id="showButton"
+            onclick="toggleForm()"
+          >
+            Precribe Medicine
+          </button>
+          &nbsp; &nbsp;
+          <a
+            href="{{ rep.report_file.url }}"
+            type="button"
+            class="btn mb-2 btn-success"
+            target="_blank"
+            >View Lab Report
+          </a>
+          &nbsp; &nbsp;
+          <a href="" type="button" class="btn mb-2 btn-danger"
+            >Previous Health History
+          </a>
+          &nbsp; &nbsp;
+          <a
+            href="{% url 'consultant_doctor:medicine' %}"
+            type="button"
+            class="btn mb-2 btn-warning"
+            >Medicine
+          </a>
+        </div>
+      </form>
+    </div>
+    <!-- /. card -->
+  </div>
+  <!-- /. col -->
+</div>
+
+<hr />
+
+<div class="col-md-12">
+  <div class="card shadow mb-4">
+    <div class="card-header">
+      <br />
+      <h3 style="text-align: center; color: red">
+        CCHC In Patient Medical Prescription Form
+      </h3>
+    </div>
+    <div class="card-body">
+      <form action="{% url 'consultant_doctor:medicine' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+          <hr />
+          <div data-role="dynamic-fields" class="col-md-12">
+            <div class="form-inline">
+              <div class="form-group col-md-3">
+                <select
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="tablet-name"
+                  name="tablet_name[]"
+                >
+                  <option value="">Select Tablet Name</option>
+                  <option value="Aspirin">Aspirin</option>
+                  <option value="Clopidogrel">Clopidogrel</option>
+                  <option value="Nitroglycerin">Nitroglycerin</option>
+                  <option value="Atenolol">Atenolol</option>
+                  <option value="Metoprolol">Metoprolol</option>
+                  <option value="Lisinopril">Lisinopril</option>
+                  <option value="Ramipril">Ramipril</option>
+                  <option value="Losartan">Losartan</option>
+                  <option value="Carvedilol">Carvedilol</option>
+                  <option value="Digoxin">Digoxin</option>
+                  <option value="Warfarin">Warfarin</option>
+                  <option value="Diltiazem">Diltiazem</option>
+                  <option value="Amiodarone">Amiodarone</option>
+                  <option value="Furosemide">Furosemide</option>
+                  <option value="Spironolactone">Spironolactone</option>
+                  <option value="Apixaban">Apixaban</option>
+                  <option value="Rivaroxaban">Rivaroxaban</option>
+                  <option value="Prasugrel">Prasugrel</option>
+                  <option value="Enoxaparin">Enoxaparin</option>
+                  <option value="Isosorbide mononitrate">
+                    Isosorbide mononitrate
+                  </option>
+                </select>
+                <h5 for="">&nbsp;&nbsp;Medicine Name</h5>
+              </div>
+
+              <div class="form-group col-md-3" aria-labelledby="tablet-name">
+                <select
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="feeding-rule"
+                  name="feeding_rule[]"
+                >
+                  <option value="">Select Feeding Rule</option>
+                  <option value="1-1-1">1-1-1</option>
+                  <option value="1-1-0">1-1-0</option>
+                  <option value="1-0-1">1-0-1</option>
+                  <option value="1-0-0">1-0-0</option>
+                  <option value="0-1-1">0-1-1</option>
+                  <option value="0-1-0">0-1-0</option>
+                  <option value="0-0-1">0-0-1</option>
+                </select>
+                <h5 for="">&nbsp;&nbsp;Feeding Rule</h5>
+              </div>
+
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="dosage"
+                  name="dosage[]"
+                  placeholder="Dosage"
+                />
+                
+              </div>
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="feeding-days"
+                  name="feeding_days[]"
+                  placeholder="Feeding Days"
+                />
+              </div>
+              <div class="form-group">
+                <button class="btn btn-danger" data-role="remove">
+                  <span class="fe fe-23 fe-trash-2"></span>
+                </button>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" data-role="add">
+                  <span class="fe fe-23 fe-plus"></span>
+                </button>
+              </div>
+            </div>
+            <!-- /div.form-inline -->
+          </div>
+          <!-- /div[data-role="dynamic-fields"] -->
+        </div>
+
+        <div style="text-align: center">
+          <br />
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    // Remove button click
+    $(document).on(
+      "click",
+      '[data-role="dynamic-fields"] > .form-inline [data-role="remove"]',
+      function (e) {
+        e.preventDefault();
+        $(this).closest(".form-inline").remove();
+      }
+    );
+    // Add button click
+    $(document).on(
+      "click",
+      '[data-role="dynamic-fields"] > .form-inline [data-role="add"]',
+      function (e) {
+        e.preventDefault();
+        var container = $(this).closest('[data-role="dynamic-fields"]');
+        new_field_group = container
+          .children()
+          .filter(".form-inline:first-child")
+          .clone();
+        new_field_group.find("input").each(function () {
+          $(this).val("");
+        });
+        container.append(new_field_group);
+      }
+    );
+  });
+</script>
+
+{% endblock %}

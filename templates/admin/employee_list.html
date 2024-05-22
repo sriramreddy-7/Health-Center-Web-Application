@@ -1,0 +1,62 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block body %}
+
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <h2 class="mb-2 page-title">Employee List</h2>
+                <!-- <p class="card-text">DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, built upon the foundations of progressive enhancement, that adds all of these advanced features to any HTML table.</p> -->
+                <div class="row my-4">
+                    <!-- Small table -->
+                    <div class="col-md-12">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <!-- table -->
+                                <table class="table datatables" id="dataTable-1">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>#</th>
+                                            <th>EMP ID</th>
+                                            <th>Name</th>
+                                            <th>Designation</th>
+                                            <th>Phone Number</th>
+                                            <th>Email</th>
+                                            <th>DOB</th>
+                                            <th>Gender</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for employee in employees %}
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input">
+                                                        <label class="custom-control-label"></label>
+                                                    </div>
+                                                </td>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ employee.emp_id }}</td>
+                                                <td>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
+                                                <td>{{ employee.emp_type }}</td>
+                                                <td>{{ employee.emp_phone }}</td>
+                                                <td>{{ employee.user.email }}</td>
+                                                <td>{{ employee.emp_dob }}</td>
+                                                <td>{{ employee.emp_gender }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

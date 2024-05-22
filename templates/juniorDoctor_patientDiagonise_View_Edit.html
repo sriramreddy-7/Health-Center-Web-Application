@@ -1,0 +1,92 @@
+{% extends 'juniorDoctor_base.html' %}
+{% load static %}
+{% block body %}
+    <div class="col-md-12">
+                  <div class="card shadow mb-4">
+                    <div class="card-header">
+                      <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagonise Form </strong>
+                    </div>
+                    <div class="card-body">
+                      <form action="/junior_doctor/juniorDoctor_patientDiagonise/{{ pd.patient_id }}/" method="post">
+                          {% csrf_token %}
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label for="patient_token">Patient Token Number</label>
+                            <input type="text" class="form-control" id="patient_token" value="{{ad.patient_token}}" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="patient_id">Patient ID</label>
+                            <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{pd.patient_id}}" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="patient_name">Patient Name</label>
+                            <input type="text" class="form-control" id="patient_name" value="{{pd.patient_name}}" readonly>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label for="gender">Gender</label>
+                            <input type="text" class="form-control" id="gender" value="{{pd.patient_gender}}" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="dob">Date of Birth</label>
+                            <input type="text" class="form-control" id="dob" value="{{pd.patient_dob}}" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="age">Age</label>
+                            <input type="text" class="form-control" id="age" value="{{pd.patient_age}}" readonly>
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label for="height">Height</label>
+                            <input type="text" class="form-control" id="height"  name="height" value="{{ md.height }}" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="weight">Weight</label>
+                            <input type="text" class="form-control" id="weight" name="weight" value="{{md.weight}}" placeholder="Enter the Patient Weight" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="bp">BP</label>
+                            <input type="text" class="form-control" id="bp" name="bp" value="{{md.bp}}" placeholder="Enter the Patient BP" readonly>
+                          </div>
+                        </div>
+                         <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label for="pulse">Pulse</label>
+                            <input type="text" class="form-control" id="pulse"  name="pulse" value="{{md.pulse}}" placeholder="Enter the Patient Pulse Rate" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                           <label for="is_diabetic">IS Diabetic</label>
+                             <input type="text" class="form-control" id="is_diabetic"  name="is_diabetic" value="{{md.is_diabetic}}" placeholder="Enter the Patient Pulse Rate" readonly>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="diabetic_level">Diabetic Level</label>
+                            <input type="text" class="form-control" id="diabetic_level" name="diabetic_level" value="{{md.diabetic_level}}" placeholder="No Diabetics" readonly>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="remarks">Remarks</label>
+                          <input type="text" class="form-control" id="remarks" name="remarks" value="{{ md.remarks }}"  readonly>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="pov">Purpose Of Visit</label>
+                          <input type="text" class="form-control" id="pov" name="pov" value="{{ md.pov }}"  readonly>
+                          </div>
+                          <div class="form-group col-md-6">
+                          <label for="phi">Previous Health Issues</label>
+                          <input type="text" class="form-control" id="phi" name="phi" value="{{ md.phi }}"  readonly>
+                          </div>
+                          <center>
+                               <a href="{% url 'junior_doctor:juniorDoctor_appointmentList' %}" type="button" class="btn btn-primary" style="text-align:center;">Return</a>
+                          </center>
+
+
+                    </div> <!-- /. card-body -->
+                 </form>
+                  </div> <!-- /. card -->
+                </div> <!-- /. col -->
+              </div> <!-- /. end-section -->
+{% endblock %}

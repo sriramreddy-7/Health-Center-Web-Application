@@ -1,0 +1,26 @@
+{% extends 'lab_incharge_base.html' %}
+{% load static %}
+{% block body %}
+
+ <div class="col-sm-12 stretch-card grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title ">CCHC IP Reports</div>
+                            <div>
+                                 {% for x in patient %}
+                                <div class="d-flex justify-content-between align-items-center py-3 border-bottom">
+                                    <div class="">
+                                        <h5 class="text-primary mb-0">{{ x.patient_id }} | {{x.appointment_id}}</h5>
+                                        <p class="mb-0 text-muted text-small">{{ x.uploaded_datetime }}</p>
+                                    </div>
+                                    <a type="button" target="_blank" class="btn btn-facebook btn-xs" href="{{ x.report_file.url }}">View Report</a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+          </div>
+{% endblock %}

@@ -1,0 +1,270 @@
+{% extends 'receptionist_base.html' %} {% load static %} {% block body %}
+
+<!--<div class="row">-->
+<!--    <div class="col-xl-8 stretch-card grid-margin">-->
+<!--        <div class="title-banner">-->
+<!--            <div class="d-lg-flex justify-content-between">-->
+<!--                <div class="mr-4">-->
+<!--                    <h3>How are feeling today ?</h3>-->
+<!--                    <p class="m-0">Get unlimited doctor consultations and much more with plusadmin</p>-->
+<!--                </div>-->
+<!--                <img src="../../assets/images/dashboard/hospital/banner-thumb.png" alt="">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-xl-4 stretch-card grid-margin">-->
+<!--        <div class="card">-->
+<!--            <div class="time-banner">-->
+<!--                <div class="d-flex justify-content-between align-items-center">-->
+<!--                    <div class="text-center border-right pr-3">-->
+<!--                        <i class="mdi mdi-clock-outline"></i>-->
+<!--                        <h6 class="m-0 font-weight-normal">Open Hours</h6>-->
+<!--                    </div>-->
+<!--                    <div class="pl-3">-->
+<!--                        <p class="m-0">Monday-Saturday: 10.00 - 24.00</p>-->
+<!--                        <p class="m-0">Sunday: 12.00 - 18.00</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="row">
+  <div class="col-xl-2 col-sm-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center hospital-features">
+          <div class="badge btn-facebook">3 New</div>
+          <i class="mdi mdi-stethoscope icon-md text-danger"></i>
+          <h5 class="font-weight-normal">Doctors</h5>
+          <h5>3,973</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 col-sm-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center hospital-features">
+          <i class="mdi mdi-ambulance icon-md text-danger"></i>
+          <h5 class="font-weight-normal">Patients</h5>
+          <h5>{{patient_count}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 col-sm-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center hospital-features">
+          <i class="mdi mdi-human-child icon-md text-danger"></i>
+          <h5 class="font-weight-normal">Nurses</h5>
+          <h5>2354</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 col-sm-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center hospital-features">
+          <i class="mdi mdi-medical-bag icon-md text-danger"></i>
+          <h5 class="font-weight-normal">Pharmacist</h5>
+          <h5>12</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 col-sm-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center hospital-features">
+          <i class="mdi mdi-calendar-clock icon-md text-danger"></i>
+          <h5 class="font-weight-normal">Today Appointments</h5>
+          <h5>{{appointment_count}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 col-sm-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center hospital-features">
+          <i class="mdi mdi-file-document-box icon-md text-danger"></i>
+          <h5 class="font-weight-normal">Reports</h5>
+          <h5>46</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-3 col-sm-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">Doctors list</div>
+        <div class="doctor-list d-flex align-items-center">
+          <img
+            src="{% static 'assets/rp/images/dashboard/hospital/Doc_1.jpg' %}"
+            alt=""
+          />
+          <div>
+            <h6 class="mb-0">Dr.Freddy</h6>
+            <p class="text-small m-0">gynaecology</p>
+          </div>
+        </div>
+        <div class="doctor-list d-flex align-items-center">
+          <img
+            src="{% static 'assets/rp/images/dashboard/hospital/Doc_11.jpg' %}"
+            alt=""
+          />
+          <div>
+            <h6 class="mb-0">Dr.Kita Chihoko</h6>
+            <p class="text-small m-0">Cardiology</p>
+          </div>
+        </div>
+        <div class="doctor-list d-flex align-items-center">
+          <img
+            src="{% static 'assets/rp/images/dashboard/hospital/Doc_9.jpg' %}"
+            alt=""
+          />
+          <div>
+            <h6 class="mb-0">Dr.Nwoye</h6>
+            <p class="text-small m-0">Cardiology</p>
+          </div>
+        </div>
+        <div class="doctor-list d-flex align-items-center">
+          <img
+            src="{% static 'assets/rp/images/dashboard/hospital/Doc_6.jpg' %}"
+            alt=""
+          />
+          <div>
+            <h6 class="mb-0">Dr.Richard</h6>
+            <p class="text-small m-0">Orthopedic</p>
+          </div>
+        </div>
+        <div class="doctor-list d-flex align-items-center border-0">
+          <img
+            src="{% static 'assets/rp/images/dashboard/hospital/Doc_9.jpg' %}"
+            alt=""
+          />
+          <div>
+            <h6 class="mb-0">Dr.Herman Beck</h6>
+            <p class="text-small m-0">Pediatric</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-9 col-sm-8 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-lg-flex justify-content-between">
+          <h4 class="card-title">Recent Appointments</h4>
+          <div class="dropdown">
+            <button
+              class="btn btn-light btn-sm mb-2 text-muted"
+              type="button"
+              id="dropdownMenuIconButton1"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="mdi mdi-settings"></i>
+            </button>
+            <div
+              class="dropdown-menu dropdown-menu-right"
+              aria-labelledby="dropdownMenuIconButton1"
+            >
+              <a
+                class="dropdown-item bg-light ary p-2 mb-1"
+                href="#"
+                class="text-muted"
+                ><i class="mdi mdi-file-excel"></i> Excel</a
+              >
+              <a class="dropdown-item bg-light p-2 mb-1" href="#"
+                ><i class="mdi mdi-file-pdf"></i> PDF</a
+              >
+              <a class="dropdown-item bg-light p-2 mb-1" href="#"
+                ><i class="mdi mdi-file-document"></i> Doc</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive custom-datatable">
+          <table
+            id="order-listing"
+            class="table table-striped apointment-table"
+          >
+            <thead>
+              <tr>
+                <th>Patient Token</th>
+                <th>Patient ID</th>
+                <th>Appointment ID</th>
+                <th>Patient Type</th>
+                <th>Doctor Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {% for x in patient %}
+                <td>{{ x.patient_token }}</td>
+                <td>{{ x.patient_id }}</td>
+                <td>{{ x.appointment_id }}</td>
+                <td>{{ x.patient_type }}</td>
+                <td>{{ x.doctor_name }}</td>
+              </tr>
+              {% endfor %}
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- first row starts here -->
+<div class="row">
+  <div class="col-xl-8 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between flex-wrap">
+          <div>
+            <div class="card-title mb-0">Patient total</div>
+            <p class="mt-3">
+              Here are your important tasks, updates and alerts.
+            </p>
+          </div>
+          <div>
+            <ul class="horizontal-legend">
+              <li><span class="bg-success"></span>New Patients</li>
+              <li><span class="bg-primary"></span>Old Patients</li>
+            </ul>
+          </div>
+        </div>
+        <div class="flot-chart-wrapper">
+          <div id="patientTotal" class="flot-chart">
+            <canvas class="flot-base"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">Diseases Report</div>
+        <p class="mt-2 mt-sm-0">a specialist will contact you shortly</p>
+        <div class="doughnut-wrapper m-auto">
+          <canvas id="deseaseReport" height="200"></canvas>
+          <div
+            id="deseaseReport-legend3"
+            class="pl-lg-0 rounded-legend w-100"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'juniorDoctor_base.html' %}
+{% block body %}
+<style>
+    select
+{
+    width:  100%;
+    height: 42px;
+}
+</style>
+<main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <!--<div class="row">-->
+                <div class="col-md-12 my-8">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">CCHC In Patient Appointment List</h5>
+                      <p class="card-text"></p>
+                    <p class="mb-2"><strong>Input masks</strong></p>
+                     <form class="d-flex justify-content-between mt-3" action="/junior_doctor/Jpdisplay" method="post">
+     <!--<input type="hidden" name="csrfmiddlewaretoken" value="">-->
+     <h1 class="text-left">CCHC IP List &nbsp;&nbsp;</h1>
+     <div class="form-row">
+
+
+
+      <div class="form-group col-md-4">
+            <div class="input-group">
+                <div class="form-group mb-3">
+                        <label for="example-date">Date</label>
+                         <input class="form-control" type="date" id="myDate" name="myDate" min="{% now "Y-m-d" %}" required>
+                        <input type="submit" value="Submit">
+
+                      </div>
+      </div>
+       </div>
+     </div>
+    </form>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th class="text-info">Patient Token</th>
+                            <th class="text-info">Patient ID </th>
+                            <th class="text-info">Appointment Date</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for x in patient %}
+                          <tr>
+                            <td>{{ x.patient_token}}</td>
+                            <td>{{ x.patient_id}}</td>
+                            <td>{{ x.appointment_date}}</td>
+                          </tr>
+                         {% endfor%}
+                        </tbody>
+                      </table>
+                    </div>
+                  <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
+<script>
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById("myDate").setAttribute("max", today);
+</script>

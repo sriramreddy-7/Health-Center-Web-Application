@@ -1,0 +1,44 @@
+{% extends 'juniorDoctor_base.html' %}
+{% block body %}
+<main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <!--<div class="row">-->
+                <div class="col-md-12 my-8">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">CCHC In Patient Appointment List | Count-{{patient_count}}</h5>
+                      <p class="card-text"></p>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th class="text-info">Patient ID</th>
+                            <th class="text-info">Patient Name </th>
+                            <th class="text-info">Patient Gender</th>
+                            <th class="text-info">Patient Age </th>
+                            <th class="text-info">Registration Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for x in patient %}
+                          <tr>
+                            <td>{{ x.patient_id}}</td>
+                            <td>{{ x.patient_name }}</td>
+                            <td>{{ x.patient_gender}}</td>
+                            <td>{{ x.patient_age }}</td>
+                            <td>{{ x.registration_date }}</td>
+                            <td><a href="#" class="btn btn-primary "><span class="fe fe-20 fe-edit"></span>&nbsp;Edit</a>
+                            &nbsp; | &nbsp; <a href="/junior_doctor/juniorDoctor_patientView/{{ x.patient_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View </a></td>
+                          </tr>
+                         {% endfor%}
+                        </tbody>
+                      </table>
+                    </div>
+                  <!--</div>-->
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+{% endblock %}

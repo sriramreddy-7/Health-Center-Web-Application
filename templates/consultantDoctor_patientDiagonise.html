@@ -1,0 +1,352 @@
+{% extends 'consultantDoctor_base.html' %} {% load static %} {% block body %}
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+<div class="col-md-12">
+  <div class="card shadow mb-4">
+    <div class="card-header">
+      <strong class="card-title"
+        >CCHC In Patient {{pd.patient_id}} Diagonise Form
+        {{ad.appointment_id}}</strong
+      >
+    </div>
+    <div class="card-body">
+      <form action="#" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="patient_token">Patient Token Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="patient_token"
+              value="{{ad.patient_token}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="patient_id">Patient ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputPassword5"
+              name="patient_id"
+              value="{{pd.patient_id}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="patient_name">Patient Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="patient_name"
+              value="{{pd.patient_name}}"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="gender">Gender</label>
+            <input
+              type="text"
+              class="form-control"
+              id="gender"
+              value="{{pd.patient_gender}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="dob">Date of Birth</label>
+            <input
+              type="text"
+              class="form-control"
+              id="dob"
+              value="{{pd.patient_dob}}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="age">Age</label>
+            <input
+              type="text"
+              class="form-control"
+              id="age"
+              value="{{pd.patient_age}}"
+              readonly
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="height">Height</label>
+            <input
+              type="text"
+              class="form-control"
+              id="height"
+              name="height"
+              placeholder="{{ phr.height }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="weight">Weight</label>
+            <input
+              type="text"
+              class="form-control"
+              id="weight"
+              name="weight"
+              placeholder="{{ phr.weight }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="bp">BP</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bp"
+              name="bp"
+              placeholder="{{ phr.bp }}"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="pulse">Pulse</label>
+            <input
+              type="text"
+              class="form-control"
+              id="pulse"
+              name="pulse"
+              placeholder="{{ phr.pulse }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="is_diabetic">IS Diabetic</label>
+            <input
+              type="text"
+              class="form-control"
+              id="is_diabetic"
+              name="is_diabetic"
+              placeholder="{{ phr.is_diabetic }}"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="diabetic_level">Enter Sugar Level</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bp"
+              name="diabetic_level"
+              placeholder="{{ phr.diabetic_level }}"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="remarks">Remarks</label>
+          <input
+            type="text"
+            class="form-control"
+            id="remarks"
+            name="remarks"
+            placeholder="{{ phr.remarks }}"
+            readonly
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="pov">Purpose Of Visit</label>
+            <select class="form-control" name="pov" id="pov">
+              <option value="{{phr.pov}}" selected>{{phr.pov}}</option>
+              <!-- <option value="General Checkup" disabled>General Checkup</option>
+                              <option value="Abnormal Pain" disabled>Abnormal Pain</option> -->
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="phi">Previous Health Issues</label>
+            <input
+              type="text"
+              class="form-control"
+              id="phi"
+              name="phi"
+              placeholder="{{ phr.phi }}"
+              readonly
+            />
+            <!--<select class="form-control select2-multi" id="phi" name="phi">-->
+            <!--  <optgroup label=" Respiratory and Neurological Health Issues">-->
+            <!--    <option value="Asthma">Asthma</option>-->
+            <!--    <option value="Migraine headaches">Migraine headaches</option>-->
+            <!--  </optgroup>-->
+            <!--  <optgroup label="Metabolic and Chronic Conditions">-->
+            <!--    <option value="Hypertension (High Blood Pressure)">Hypertension (High Blood Pressure)</option>-->
+            <!--    <option value="Type 2 Diabetes">Type 2 Diabetes</option>-->
+            <!--    <option value="Osteoarthritis">Osteoarthritis</option>-->
+            <!--    <option value="Gastroesophageal Reflux Disease (GERD)">Gastroesophageal Reflux Disease (GERD)</option>-->
+            <!--    <option value="Depression">Depression </option>-->
+            <!--    <option value="Coronary Artery Disease">Coronary Artery Disease</option>-->
+            <!--    <option value="Thyroid Disorder">Thyroid Disorder</option>-->
+            <!--    <option value="Chronic Kidney Disease">Chronic Kidney Disease </option>-->
+
+            <!--  </optgroup>-->
+            <!--</select>-->
+          </div>
+          <a
+            href="/consultant_doctor/consultantDoctor_precribeTest/{{ad.appointment_id}}/"
+            class="btn mb-2 btn-primary"
+            type="button"
+            >Precribe Test</a
+          >
+          &nbsp; &nbsp;
+          <button
+            type="button"
+            class="btn mb-2 btn-secondary"
+            id="showButton"
+            onclick="toggleForm()"
+          >
+            Precribe Medicine
+          </button>
+          &nbsp; &nbsp;
+          <a
+            href="{{ rep.report_file.url }}"
+            type="button"
+            class="btn mb-2 btn-success"
+            target="_blank"
+            >View Lab Report
+          </a>
+          &nbsp; &nbsp;
+          <a href="" type="button" class="btn mb-2 btn-danger"
+            >Previous Health History
+          </a>
+          &nbsp; &nbsp;
+          <a
+            href="{% url 'consultant_doctor:medicine' %}"
+            type="button"
+            class="btn mb-2 btn-warning"
+            >Medicine
+          </a>
+        </div>
+      </form>
+    </div>
+    <!-- /. card -->
+  </div>
+  <!-- /. col -->
+</div>
+
+<div class="col-md-12 hidden" id="prescriptionForm">
+  <div class="card shadow mb-4">
+    <div class="card-header">
+      <strong class="card-title">Diagonisis Report</strong>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="simpleinput">Text</label>
+            <input type="text" id="simpleinput" class="form-control" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="example-email">Email</label>
+            <input
+              type="email"
+              id="example-email"
+              name="example-email"
+              class="form-control"
+              placeholder="Email"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="example-password">Password</label>
+            <input
+              type="password"
+              id="example-password"
+              class="form-control"
+              value="password"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="example-palaceholder">Placeholder</label>
+            <input
+              type="text"
+              id="example-palaceholder"
+              class="form-control"
+              placeholder="placeholder"
+            />
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="example-helping">Helping text</label>
+            <input
+              type="text"
+              id="example-helping"
+              class="form-control"
+              placeholder="Input with helping text"
+            />
+            <span class="help-block"
+              ><small
+                >A block of help text that breaks onto a new line.</small
+              ></span
+            >
+          </div>
+          <div class="form-group mb-3">
+            <label for="example-readonly">Readonly</label>
+            <input
+              type="text"
+              id="example-readonly"
+              class="form-control"
+              readonly=""
+              value="Readonly value"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="example-disable">Disabled</label>
+            <input
+              type="text"
+              class="form-control"
+              id="example-disable"
+              disabled=""
+              value="Disabled value"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="example-static">Static control</label>
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              id="example-static"
+              value="j@example.com"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleForm() {
+    var form = document.getElementById("prescriptionForm");
+    var showButton = document.getElementById("showButton");
+
+    if (form.classList.contains("hidden")) {
+      form.classList.remove("hidden");
+      showButton.innerText = "Hide";
+    } else {
+      form.classList.add("hidden");
+      showButton.innerText = "Precribe Medicine";
+    }
+  }
+</script>
+
+{% endblock %}

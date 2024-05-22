@@ -1,0 +1,292 @@
+{% extends 'receptionist_base.html' %}
+{% load static %}
+ {% block body %}
+ <style>
+  .box
+  {
+    margin-bottom: 25px;
+  }
+  .popup-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+    }
+
+    /* Style the popup */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+
+</style>
+<div class="page-header">
+  <h3 class="page-title">CCHC</h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+        <a href="{% url 'receptionist:receptionist_dashboard' %}">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item"><a href="#">New Patient Registration</a></li>
+
+    </ol>
+  </nav>
+</div>
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title" style="color: red">
+        CCHC In Patient Registration Form
+      </h4>
+      <form class="form-sample" action="{% url 'receptionist:newPatient_registration' %}" method="post">
+        {% csrf_token %}
+        <p class="card-description">Personal info</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Full Name</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Patient Full Name"
+                  name="pname"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Gender</label>
+              <div class="col-sm-9">
+                <select class="form-control form-control-lg" name="pgender" required>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Transgender">Transgender</option>
+                  <option value="Prefer Not to Say">Prefer Not to Say</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Date of Birth</label>
+              <div class="col-sm-9">
+                <input
+                  class="form-control"
+                  placeholder="dd/mm/yyyy"
+                  type="date"
+                  name="pdob"
+                  id="dob"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Age</label>
+              <div class="col-sm-9">
+                  <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter Patient Age" id="age" name="page" aria-describedby="basic-addon2" />
+                        <div class="input-group-append">
+                          <button class="btn btn-lg btn-primary" type="button" onclick="calculateAge()"> Get Age </button>
+                        </div>
+                      </div>
+                <!--<input-->
+                <!--  class="form-control"-->
+                <!--  placeholder="Enter Patient Age"-->
+                <!--  type="number"-->
+                <!--  name="page"-->
+                <!--  id="age"-->
+                <!--  required-->
+                <!--/>-->
+                <!--<div class="input-group-append">-->
+                <!--          <button class="btn btn-sm btn-primary" type="button" onclick="calculateAge()"> Get Age </button>-->
+                <!--        </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Gaurdian</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Gaurdian/Father/Husband Name"
+                  name="pgname"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Relation</label>
+              <div class="col-sm-9">
+                <select class="form-control form-control-lg" name="pgrelation" required>
+                  <option value="Father">Father</option>
+                  <option value="Mother">Mother</option>
+                  <option value="Husband">Husband</option>
+                  <option value="Wife">Wife</option>
+                  <option value="Gaurdian">Gaurdian</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="card-description">Address</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Mobile Number</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Patient Mobile Number"
+                  required
+                  name="pmnum"
+                  required
+                  maxlength="10"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="state">State</label>
+              <div class="col-sm-9">
+                <select class="form-control form-control-lg" name="pstate" id="state" required>
+                  <option value="">Select State</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="district"
+                >District</label
+              >
+              <div class="col-sm-9">
+                <select class="form-control form-control-lg" name="pdistrict" id="district" required>
+                  <option value="">Select District</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="address"
+                >Address</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  id="address"
+                  placeholder="Enter Address"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="box">
+<center>
+<button class="btn btn-danger btn-lg" type="submit" id="show-modal" >
+Register
+</button>
+<button class="btn btn-primary btn-lg" type="button" onclick="showPopup()">
+Cancel
+</button>
+</center>
+    </div>
+  </form>
+  </div>
+</div>
+<div id="popup-container" class="popup-container">
+    <div id="popup" class="popup">
+ <div class="card text-bg-danger mb-3" style="max-width: 18rem">
+      <div class="card-header" style="text-align: center"><img src="{% static 'icons/warning56.png' %}"></div>
+      <div class="card-body">
+        <center>
+
+        <h5 class="card-title">Do you really want to cancel registration ?</h5>
+        <p class="card-text">
+          All details will lost
+        </p>
+        </center>
+      </div>
+      <div class="button-container">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'receptionist:newPatient_registration' %}" class="btn btn-danger" type="button" id="show-modal" >
+        Yes
+        </a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+        <button class="btn btn-primary" type="button"  onclick="hidePopup()">
+        No
+        </button>
+
+      </div>
+      <br>
+
+    </div>
+
+    </div>
+  </div>
+</div>
+<script>
+function showPopup() {
+      document.getElementById("popup-container").style.display = "block";
+    }
+
+    function hidePopup() {
+      document.getElementById("popup-container").style.display = "none";
+    }
+
+    document.getElementById("show-modal").addEventListener("click", function(){
+        document.getElementById("modal").style.display = "block";
+    });
+
+    document.getElementById("done-modal").addEventListener("click", function(){
+        document.getElementById("modal").style.display = "none";
+        location.reload();
+    });
+    function calculateAge() {
+      var dob = document.getElementById("dob").value;
+      var today = new Date();
+      var birthDate = new Date(dob);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      document.getElementById("age").value = age;
+    }
+</script>
+
+{% endblock %}

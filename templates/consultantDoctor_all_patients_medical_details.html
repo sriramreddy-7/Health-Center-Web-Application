@@ -1,0 +1,146 @@
+{% extends 'consultantDoctor_base.html' %}
+{% block body %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css"
+/>
+<style>
+  .dt-buttons .buttons-copy {
+    background-color: blue !important;
+    color: white !important;
+    border-color: blue !important;
+  }
+
+  .dt-buttons .buttons-csv {
+    background-color: green !important;
+    color: white !important;
+    border-color: green !important;
+  }
+
+  .dt-buttons .buttons-excel {
+    background-color: darkgreen !important;
+    color: white !important;
+    border-color: darkgreen !important;
+  }
+
+  .dt-buttons .buttons-pdf {
+    background-color: red !important;
+    color: white !important;
+    border-color: red !important;
+  }
+
+  .dt-buttons .buttons-print {
+    background-color: darkorange !important;
+    color: black !important;
+    border-color: darkorange !important;
+  }
+
+  .dt-buttons .buttons-copy:hover,
+  .dt-buttons .buttons-csv:hover,
+  .dt-buttons .buttons-excel:hover,
+  .dt-buttons .buttons-pdf:hover,
+  .dt-buttons .buttons-print:hover {
+    opacity: 0.9;
+  }
+</style>
+<div class="col-md-12">
+<div class="card shadow mb-4">
+  <div class="card-header">
+         <strong class="card-title">CCHC In Patient'S Details Forms </strong>
+  </div>
+ <div class="card-body">
+<table class="table accordion-body table-hover table-sm">
+<div id="patient_list" class="display">
+  <tr class="table-primary">
+    <th>S.NO</th>
+    <th>PATIENT ID</th>
+    <th>APPOINTMENT ID</th>
+    <th>VISTING DATE</th>
+    <th>HEIGHT</th>
+    <th>WEIGHT</th>
+    <th>PULSE</th>
+    <th>BP</th>
+    <th>BLOOD GROUP</th>
+    <th>IS DIABETIC</th>
+    <th>DIABETIC LEVEL</th>
+    <th>PHI</th>
+    <th>POV</th>
+    <th>REMARKS</th>
+  </tr>
+</div>
+    {% for patient in app_id %}
+  <tr class="table-success">
+    <td>{{ forloop.counter }}</td>
+    <td>{{ patient.patient_id }}</td>
+    <td>{{ patient.appointment_id }}</td>
+    <td>{{ patient.date_and_time }}</td>
+    <td>{{ patient.height }}</td>
+    <td>{{ patient.weight }}</td>
+    <td>{{ patient.pulse }}</td>
+    <td>{{ patient.bp }}</td>
+    <td>{{ patient.blood_group }}</td>
+    <td>{{ patient.is_diabetic }}</td>
+    <td>{{ patient.diabetic_level }}</td>
+    <td>{{ patient.phi }}</td>
+    <td>{{ patient.pov }}</td>
+    <td>{{ patient.remarks}}</td>
+  </tr>
+  {% endfor %}
+  
+</table>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#patient_list").DataTable({
+      dom: "Bfrtip",
+      buttons: ["copy", "csv", "excel", "pdf", "print"],
+      lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, "All"],
+      ],
+      pageLength: 10,
+    });
+  });
+</script>
+<script
+  type="text/javascript"
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"
+></script>
+<!-- Additional dependencies for Excel and PDF -->
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"
+></script>
+{% endblock %}

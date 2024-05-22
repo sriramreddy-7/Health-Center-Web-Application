@@ -1,0 +1,129 @@
+{% load static %}
+    <link href="{% static 'icons/hb.png' %}" rel="icon">
+    <link rel="stylesheet"      href="{% static 'rp/vendors/mdi/css/materialdesignicons.min.css' %}" />
+    <link rel="stylesheet"      href="{% static 'rp/vendors/flag-icon-css/css/flag-icon.min.css' %}" />
+    <link rel="stylesheet"      href="{% static 'rp/vendors/css/vendor.bundle.base.css' %}" />
+    <link rel="stylesheet"      href="{% static 'rp/vendors/jquery-bar-rating/css-stars.css' %}" />
+    <link rel="stylesheet"      href="{% static 'rp/vendors/font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet"      href="{% static 'rp/css/demo_2/style.css' %}" />
+      <script>
+    function printPage() {
+        var element = document.getElementById("toHide");
+        element.style.display = "none";
+        window.print();
+        element.style.display = "block";
+    }
+  </script>
+
+ <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+          <div class="content-wrapper">
+              <div id="toHide">
+                  <br>
+              <h3 class="page-title" style="text-align:center;"> Appointment Acknowledgement </h3>
+              <hr py-4/>
+              </div>
+              <br>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card px-2">
+      <div class="card-body">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+                <img src="{% static 'icons/hb.png' %}" class="me-2" style="height: 150px; width: 150px; object-fit: contain;" />
+
+                 <!--<h3 class="text-left my-5 me-2">Crazy Coders Health Center</h3>-->
+            </div>
+            <div>
+            <h3 class="mb-2" style="color:red;">Crazy Coders Health Center</h3>
+            <p class="mb-1">Mulugu Rd, Vidya Nagar, Warangal</p>
+            <p class="mb-1">Telangana 506007, India</p>
+            <p class="mb-1">info@cchc.com</p>
+            <p class="mb-1"><i class="uil uil-phone me-1"></i> +91 9876543210</p>
+          </div>
+        </div>
+        <hr>
+            </div>
+                    <!--<div class="container-fluid d-flex justify-content-between">-->
+                    <!--  <div class="col-lg-3 pl-0">-->
+                    <!--    <p class="mt-5 mb-2"><b>Plus Admin</b></p>-->
+                    <!--    <p>104,<br>Minare SK,<br>Canada, K1A 0G9.</p>-->
+                    <!--  </div>-->
+                    <!--  <div class="col-lg-3 pr-0">-->
+                    <!--    <p class="mt-5 mb-2 text-right"><b>Invoice to</b></p>-->
+                    <!--    <p class="text-right">Gaala & Sons,<br> C-201, Beykoz-34800,<br> Canada, K1A 0G9.</p>-->
+                    <!--  </div>-->
+                    <!--</div>-->
+                    <div class="container-fluid d-flex justify-content-between">
+                      <div class="col-lg-3 pl-0">
+                        <p class="mb-0 mt-5"> {{patient.patient_id}}</p>
+                        <p class="mb-0 mt-5">Invoice Date : 23rd Jan 2016</p>
+                        <p>Due Date : 25th Jan 2017</p>
+                      </div>
+                    </div>
+                    <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+                      <div class="table-responsive w-100">
+                        <table class="table">
+                          <thead>
+                            <tr class="bg-primary text-white">
+                              <th>Patient ID</th>
+                              <th>Token Number</th>
+                              <th>Patient Name</th>
+                              <th>Gender</th>
+                              <th>Date of Birth</th>
+                              <th>Age</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr >
+                              <td>{{patient.patient_id}}</td>
+                              <td> {{flag.patient_token}}</td>
+                              <td> {{patient.patient_name}}</td>
+                              <td> {{patient.patient_gender}}</td>
+                              <td> {{patient.patient_dob}}</td>
+                              <td> {{patient.patient_age}} </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="container-fluid mt-5 w-100">
+                      <p class="text-right mb-2">Consultanting Fee: 500/-</p>
+                      <hr>
+                    </div>
+                    <div class="d-print-none mt-4">
+                    <div class="container-fluid w-100">
+                      <button class="btn btn-primary float-right mt-4 ms-2" id="printButton" onclick="printPage()" ><i class="mdi mdi-printer me-1"></i>Print</button>
+                      <a href="/receptionist/receptionist_dashboard" id="toHide" class="btn btn-success float-right mt-4" role="button"  id="printButton"><i class="mdi mdi-telegram me-1"></i>Dashboard</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              </div>
+              </div>
+
+    <script src="{% static 'rp/vendors/datatables.net/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+
+    <script src="{% static 'rp/js/sdscrpit.js' %}"></script>
+
+    <script src="{% static 'rp/vendors/js/vendor.bundle.base.js' %}"></script>
+    <script src="{% static 'rp/vendors/jquery-bar-rating/jquery.barrating.min.js' %}"></script>
+    <script src="{% static 'rp/vendors/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'rp/vendors/flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'rp/vendors/flot/jquery.flot.resize.js' %}"></script>
+    <script src="{% static 'rp/vendors/flot/jquery.flot.categories.js' %}"></script>
+    <script src="{% static 'rp/vendors/flot/jquery.flot.fillbetween.js' %}"></script>
+    <script src="{% static 'rp/vendors/flot/jquery.flot.stack.js' %}"></script>
+    <script src="{% static 'rp/js/off-canvas.js' %}"></script>
+    <script src="{% static 'rp/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'rp/js/misc.js' %}"></script>
+    <script src="{% static 'rp/js/settings.js' %}"></script>
+    <script src="{% static 'rp/js/todolist.js' %}"></script>
+    <script src="{% static 'rp/js/chart.js' %}"></script>
+    <script src="{% static 'rp/js/dashboard.js' %}"></script>
+    <script src="{% static 'rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>

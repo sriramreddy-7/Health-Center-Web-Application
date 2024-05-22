@@ -1,0 +1,136 @@
+{% extends 'lab_incharge_base.html' %}
+{% block body %}
+<div class="page-header">
+  <h3 class="page-title">CCHC</h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'lab_incharge:lab_incharge_patient_wise_report' %}"> Patient Wise Report</a></li>
+      <li class="breadcrumb-item active" aria-current="page">
+       <a href="{% url 'lab_incharge:lab_incharge_dashboard' %}">Dashboard</a>
+      </li>
+    </ol>
+  </nav>
+</div>
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title" style="color: red">
+        CCHC Patient Form
+      </h4>
+        <p class="card-description">Personal Info</p>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Appointment ID</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ appid.appointment_id }}"
+                  name="patient_id"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Patient ID</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_id}}"
+                  name="patient_id"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Full Name</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_name}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Gender</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_gender}}"
+
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Date of Birth</label>
+              <div class="col-sm-9">
+                  <div class="input-group">
+                        <input
+                      type="text"
+                      class="form-control"
+                      value="{{patient.patient_dob}}"
+                      readonly
+                />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Age</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_age}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+      <h4 class="card-title" style="color: red">
+        Upload Patient Report
+      </h4>
+<h1>Upload here from</h1>
+  <form action="/lab_incharge/lab_incharge_upload_report/{{patient.patient_id}}/" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+        <input type="text" id="patient_id" name="patient_id" value="{{patient.patient_id}}" readonly ><br>
+        <label for="report_file">Report File:</label>
+        <input type="file" id="report_file" name="report_file" class="form form-control" ><br>
+        <input type="submit" value="Upload" class="btn btn-primary">
+        </form>
+        </div>
+    </div>
+    <div class="box">
+<center>
+<!--<a href="/receptionist/appointment/{{patient.patient_id}}/" class="btn btn-danger btn-lg" type="submit" >-->
+<!--Book Appointment-->
+<!--</a>-->
+</center>
+<br>
+<!--</form>-->
+
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

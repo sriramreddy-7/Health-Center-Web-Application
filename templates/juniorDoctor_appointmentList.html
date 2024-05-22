@@ -1,0 +1,52 @@
+{% extends 'juniorDoctor_base.html' %}
+{% block body %}
+<main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <!--<div class="row">-->
+                <div class="col-md-12 my-8">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">CCHC In Patient List</h5>
+                      <p class="card-text"></p>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th class="text-info">Patient Token</th>
+                            <th class="text-info">Patient ID </th>
+                            <th class="text-info">Appointment ID </th>
+                            <th class="text-info">Appointment Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for appointment in appointments %}
+                                 <tr>
+                                   <td>{{ appointment.patient_token }}</td>
+                                   <td>{{ appointment.patient_id }}</td>
+                                   <td>{{ appointment.appointment_id }}</td>
+                                   <td>{{ appointment.visit_date }}</td>
+                                   <td>
+                                     {% if appointment.jdd_data_present %}
+                                       <button class="btn btn-primary" disabled><span class="fe fe-check-square"></span>&nbsp;Diagnosed</button>
+                                     {% else %}
+                                       <a href="/junior_doctor/juniorDoctor_patientDiagonise/{{ appointment.appointment_id }}/" class="btn btn-primary"><span class="fe fe-20 fe-edit"></span>&nbsp;Diagnose&nbsp;</a>
+                                     {% endif %}
+                                     &nbsp; | &nbsp;
+                                     <a href="/junior_doctor/juniorDoctor_patientDiagonise_View_Edit/{{ appointment.patient_id }}/" class="btn btn-secondary">
+                                       <span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit
+                                     </a>
+                                   </td>
+                                 </tr>
+                                 {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  <!--</div>-->
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+{% endblock %}

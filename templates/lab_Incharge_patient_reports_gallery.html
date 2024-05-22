@@ -1,0 +1,44 @@
+{% extends 'lab_incharge_base.html' %}
+{% load static %}
+{% block body %}
+<style>
+    .align-images {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.equal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+</style>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="row portfolio-grid align-images">
+              {% for x in patient %}
+              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                <figure class="effect-text-in">
+                  <img src="{{ x.report_file.url }}" alt="image" class="equal-image" />
+                  <figcaption>
+                    <h4>{{ x.patient_id }} | {{x.appointment_id}}</h4>
+                    <p>{{ x.uploaded_datetime }}</p>
+                  </figcaption>
+                </figure>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

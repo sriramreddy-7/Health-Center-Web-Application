@@ -1,0 +1,60 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+{% block body %}
+<main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <!--<div class="row">-->
+                <div class="col-md-12 my-8">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">CCHC Staff Login Logs</h5>
+                      <p class="card-text"></p>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th class="text-info">Username</th>
+                            <th class="text-info">Full Name</th>
+                            <th class="text-info">Email</th>
+                            <th class="text-info">Login Date & Time</th>
+                            <th class="text-info">IP Address</th>
+                            <th class="text-info">Request Method</th>
+                            <th class="text-info">User Agent</th>
+                            <th class="text-info">Content Type</th>
+                            <th class="text-info">Action</th>
+                            <th class="text-info">Changes</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                             {% for log_entry in user_logs %}
+                          <tr>
+                            <td>{{ log_entry.user }}</td>
+                            <td>{{ log_entry.user.get_full_name }}</td>
+                            <td>{{ log_entry.user.email }}</td>
+                            <td>{{ log_entry.action_time }}</td>
+                             <td>{{ log_entry.ip_address }}</td>
+                             <td>{{ log_entry.request_method }}</td>
+                             <td>{{ log_entry.user_agent }}</td>
+                             <td>{{ log_entry.object_repr }}</td>
+                             <td>{{ log_entry.content_type }}</td>
+                             <td>{{ log_entry.get_action_flag_display }}</td>
+                             <td>{% if log_entry.change_message %}
+                                    {{ log_entry.change_message }}
+                                {% else %}
+                                 No changes recorded.
+                                {% endif %}
+                            </td>
+                         {% endfor%}
+                        </tbody>
+                      </table>
+                    </div>
+                  <!--</div>-->
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+
+{% endblock %}

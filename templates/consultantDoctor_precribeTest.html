@@ -1,0 +1,147 @@
+{% extends 'consultantDoctor_base.html' %} {% load static %} {% block body %}
+
+<div class="col-md-12">
+  <div class="card shadow mb-4">
+    <div class="card-header">
+      <strong class="card-title">CCHC In Patient {{pd.patient_id}} Medical Test Precribtion
+      </strong>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        
+        <div class="form-group col-md-3">
+          <label for="patient_token">Patient Token Number</label>
+          <input type="text" class="form-control" id="patient_token" value="{{ad.patient_token}}" readonly />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="patient_id">Patient ID</label>
+          <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{pd.patient_id}}"
+            readonly />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="patient_id">Appointment Id</label>
+          <input type="text" class="form-control" id="inputPassword5" name="appointment_id" value="{{ad.appointment_id }}"
+            readonly />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="patient_name">Patient Name</label>
+          <input type="text" class="form-control" id="patient_name" value="{{pd.patient_name}}" readonly />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="gender">Gender</label>
+          <input type="text" class="form-control" id="gender" value="{{pd.patient_gender}}" readonly />
+        </div>
+        <div class="form-group col-md-4">
+          <label for="dob">Date of Birth</label>
+          <input type="text" class="form-control" id="dob" value="{{pd.patient_dob}}" readonly />
+        </div>
+        <div class="form-group col-md-4">
+          <label for="age">Age</label>
+          <input type="text" class="form-control" id="age" value="{{pd.patient_age}}" readonly />
+        </div>
+      </div>
+      <div class="card-header">
+        <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagonise Form
+        </strong>
+      </div>
+      <br />
+      <form  action="/consultant_doctor/consultantDoctor_precribeTest/{{ ad.appointment_id }}/" method="post">
+        {% csrf_token %}
+        <div class="dropdown-container mb-3">
+          <div class="form-row">
+        
+        <div class="form-group col-md-6">
+          <!-- <label for="patient_id">Patient ID</label> -->
+          <input type="hidden" class="form-control" id="patient_id" value="{{pd.patient_id}}" name="patient_id" readonly/>
+        </div>
+        <div class="form-group col-md-6">
+          <!-- <label for="appointment_id">Appointment ID</label> -->
+          <input type="hidden" class="form-control" id="appointment_id" name="appointment_id" value="{{ad.appointment_id}}"
+            readonly />
+        </div>
+        </div>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="x_ray" value="Chest X Ray">
+                <label class="custom-control-label" for="x_ray">Chest X Ray</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Echocardiogram" name="echocardiogram" value="Echocardiogram">
+                <label class="custom-control-label" for="Echocardiogram">Echocardiogram (heart ultrasound)</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Electrocardiogram" name="electrocardiogram" value="Electrocardiogram">
+                <label class="custom-control-label" for="Electrocardiogram">Electrocardiogram (ECG)</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="MRI" name="mri" value="MRI">
+                <label class="custom-control-label" for="MRI">MRI</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Stress_Tests" name="stress_test" value="Stress Tests">
+                <label class="custom-control-label" for="Stress_Tests">Stress Tests</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Exercise" name="est" value="Exercise Stress Test"> 
+                <label class="custom-control-label" for="Exercise">Exercise Stress Test</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Blood_Test" name="blood_test" value="Blood Test">
+                <label class="custom-control-label" for="Blood_Test">Blood Test</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Urine_Test" name="urine_test" value="Urine Test">
+                <label class="custom-control-label" for="Urine_Test">Urine Test</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="CT_Scan" name="ct_scan" value="CT Scan">
+                <label class="custom-control-label" for="CT_Scan">CT Scan</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Thread_Mill_Test" name="thread_mill_test" value="Thread Mill Test">
+                <label class="custom-control-label" for="Thread_Mill_Test">Thread Mill Test</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Stress" name="echo" value="Stress Echocardiogram">
+                <label class="custom-control-label" for="Stress">Stress Echocardiogram (stress echo)</label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="Angiography" name="angiography" value="Coronary Angiography">
+                <label class="custom-control-label" for="Angiography">Coronary Angiography</label>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="btn btn-success" value="Submit" />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

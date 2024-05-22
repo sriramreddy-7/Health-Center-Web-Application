@@ -1,0 +1,69 @@
+{% extends 'juniorDoctor_base.html'%}
+{% load static %}
+{% block body %}
+<style>
+    
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 25px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>All Patient Diagonsis Sheet</h2>
+
+<table>
+  <tr>
+   
+    <th>Patient ID</th>
+    <th>Appointment ID</th>
+    <th>Visiting Date</th>
+    <th>Height</th>
+    <th>Weight</th>
+    <th>Pulse</th>
+    <th>BP</th>
+    <th>Blood Group</th>
+    <th>IS Diabetic</th>
+    <th>Diabetic Level</th>
+    <th>PHI</th>
+    <th>POV</th>
+    <th>Remarks</th>
+  </tr>
+    {% for patient in jdoctor %}
+  <tr>
+    
+    <td>{{ patient.patient_id }}</td>
+    <td>{{ patient.appointment_id }}</td>
+    <td>{{ patient.date_and_time }}</td>
+    <td>{{ patient.height }}</td>
+    <td>{{ patient.weight }}</td>
+    <td>{{ patient.pulse }}</td>
+    <td>{{ patient.bp }}</td>
+    <td>{{ patient.blood_group }}</td>
+    <td>{{ patient.is_diabetic }}</td>
+    <td>{{ patient.diabetic_level }}</td>
+    <td>{{ patient.phi }}</td>
+    <td>{{ patient.pov }}</td>
+    <td>{{ patient.remarks}}</td>
+  </tr>
+  {% endfor %}
+  
+</table>
+
+</body>
+{% endblock %}
+

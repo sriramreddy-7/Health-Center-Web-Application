@@ -1,0 +1,223 @@
+{% extends 'consultantDoctor_base.html' %}
+{% load static %}
+{% block body %}
+
+<link rel="stylesheet" href="{% static 'doctor/css/dataTables.bootstrap4.css' %}">
+
+  <main role="main" class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <span class="h2 mb-0">{{appt_count}}</span>
+                          <h5 class="text-primary">Today Appointments</h5>
+                          <!--<span class="badge badge-pill badge-success">+15.5%</span>-->
+                        </div>
+                        <div class="col-auto">
+                          <span class="fe fe-24 fe-user-check text-muted mb-0"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <span class="h2 mb-0">1K+</span>
+                         <h5 class="text-primary">Total Patients</h5>
+                          <!--<span class="badge badge-pill badge-success">+16.5%</span>-->
+                        </div>
+                        <div class="col-auto">
+                          <span class="fe fe-32 fe-clipboard text-muted mb-0"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <span class="h2 mb-0">{{patient_count}}</span>
+                          <h5 class="text-primary">Total Patients</h5>
+                          <!--<p class="small text-muted mb-0"><h2 class="text-primary">Total Patients</h2></p>-->
+                          <span class="badge badge-pill badge-warning"></span>
+                        </div>
+                        <div class="col-auto">
+                          <span class="fe fe-32 fe-users text-muted mb-0"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="mb-2 align-items-center">
+                <div class="card shadow mb-4">
+                  <div class="card-body">
+                    <div class="row mt-1 align-items-center">
+                      <div class="col-12 col-lg-4 text-left pl-4">
+                        <p class="mb-1 small text-muted">Balance</p>
+                        <span class="h3">$12,600</span>
+                        <span class="small text-muted">+20%</span>
+                        <span class="fe fe-arrow-up text-success fe-12"></span>
+                        <p class="text-muted mt-2"> Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui </p>
+                      </div>
+                      <div class="col-6 col-lg-2 text-center py-4">
+                        <p class="mb-1 small text-muted">Today</p>
+                        <span class="h3">$2600</span><br />
+                        <span class="small text-muted">+20%</span>
+                        <span class="fe fe-arrow-up text-success fe-12"></span>
+                      </div>
+                      <div class="col-6 col-lg-2 text-center py-4 mb-2">
+                        <p class="mb-1 small text-muted">Goal Value</p>
+                        <span class="h3">$260</span><br />
+                        <span class="small text-muted">+6%</span>
+                        <span class="fe fe-arrow-up text-success fe-12"></span>
+                      </div>
+                      <div class="col-6 col-lg-2 text-center py-4">
+                        <p class="mb-1 small text-muted">Completions</p>
+                        <span class="h3">26</span><br />
+                        <span class="small text-muted">+20%</span>
+                        <span class="fe fe-arrow-up text-success fe-12"></span>
+                      </div>
+                      <div class="col-6 col-lg-2 text-center py-4">
+                        <p class="mb-1 small text-muted">Conversion</p>
+                        <span class="h3">6%</span><br />
+                        <span class="small text-muted">-2%</span>
+                        <span class="fe fe-arrow-down text-danger fe-12"></span>
+                      </div>
+                    </div>
+                    <div class="chartbox mr-4">
+                      <div id="areaChart"></div>
+                    </div>
+                  </div> <!-- .card-body -->
+                </div> <!-- .card -->
+            </div>
+
+
+                <div class="row my-4">
+                <div class="col-md-6">
+                  <div class="card shadow bg-primary text-center mb-4">
+                    <div class="card-body p-5">
+                      <span class="circle circle-md bg-primary-light">
+                        <i class="fe fe-24 fe-user"></i>
+                      </span>
+                      <h3 class="h4 mt-4 mb-1 text-white">Patient Id</h3>
+
+                      <button type="button" class="btn btn-lg bg-primary-light text-white" data-toggle="modal" data-target=".modal-full">Quick Search<i class="fe fe-arrow-right fe-16 ml-2"></i></button>
+                    </div> <!-- .card-body -->
+                  </div> <!-- .card -->
+                </div> <!-- .col-md-->
+                <div class="col-md-6">
+                    <div class="card shadow bg-success text-center mb-4">
+                        <div class="card-body p-5">
+                        <span class="circle circle-md bg-success-light">
+                            <i class="fe fe-24 fe-users"></i>
+                        </span>
+                        <h3 class="h4 mt-4 mb-1 text-white">Patient Details</h3>
+
+                        <a href="{% url 'consultant_doctor:consultantDoctor_patientList' %}" class="btn btn-lg bg-success-light text-white">Patient List<i class="fe fe-arrow-right fe-16 ml-2"></i></a>
+                        </div> <!-- .card-body -->
+                    </div> <!-- .card -->
+                </div> <!-- .col-md-->
+                </div> <!-- .row -->
+        <div class="modal fade modal-full" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <button aria-label="" type="button" class="close px-2" data-dismiss="modal" aria-hidden="true">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-body text-center">
+                              <p> Enter the Patient Id to find the details </p>
+                              <form class="form-inline justify-content-center">
+                                <input class="form-control form-control-lg mr-sm-2 bg-transparent" type="search" placeholder="Search" aria-label="Search" placeholder="Enter the Patient ID" required>
+                                <button class="btn btn-primary btn-lg mb-2 my-2 my-sm-0" type="submit">Search</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <!-- table -->
+                      <table class="table datatables" id="dataTable-1">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Department</th>
+                            <!--<th>Company</th>-->
+                            <!--<th>Address</th>-->
+
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         {% for record in common_records %}
+                          <tr>
+                            <td>
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <label class="custom-control-label"></label>
+                              </div>
+                            </td>
+                            <td>{{ record.patient_id }}</td>
+                            <td>{{ record.patient_name }}</td>
+                            <td>{{ record.patient_age }}</td>
+                            <td>{{ record.patient_dob}}</td>
+                            <!--<td>{{ record.appointment_date }}</td>-->
+                            <!--<td>{{ record.patient_token }}</td>-->
+
+                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="consultantDoctor_patientDiagonise_View_Edit/{{ record.patient_id }}/">Edit</a>
+                                <a class="dropdown-item" href="#">Chekup History</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                              </div>
+                            </td>
+                          </tr>
+
+                    {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+       </div>
+</main>
+    <script src="{% static 'doctor/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'doctor/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script>
+      $('#dataTable-1').DataTable(
+      {
+        autoWidth: true,
+        "lengthMenu": [
+          [16, 32, 64, -1],
+          [16, 32, 64, "All"]
+        ]
+      });
+    </script>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+{% endblock %}

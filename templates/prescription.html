@@ -1,0 +1,145 @@
+{% load static %}
+ <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>CCHC Medical Precription </title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body class="p-3 m-0 border-0 bd-example m-0 border-0">
+  <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8">
+              <div class="row align-items-center mb-4">
+                <div class="col">
+                  <h2 class="h5 page-title"><small class="text-muted text-uppercase">Invoice</small><br />#1806</h2>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-secondary">Print</button>
+                  <button type="button" class="btn btn-primary">Save</button>
+                </div>
+              </div>
+              <div class="card shadow">
+                <div class="card-body p-5">
+                  <div class="row mb-5">
+                    <div class="col-12 text-center mb-4">
+                      <img src="" class="navbar-brand-img brand-sm mx-auto mb-4" alt="...">
+                      <h2 class="mb-0 text-uppercase">Invoice</h2>
+                      <p class="text-muted"> Altavista<br /> 9022 Suspendisse Rd. </p>
+                    </div>
+                    <div class="col-md-7">
+                      <p class="small text-muted text-uppercase mb-2">Invoice from</p>
+                      <p class="mb-4">
+                        <strong>Imani Lara</strong><br /> Asset Management<br /> 9022 Suspendisse Rd.<br /> High Wycombe<br /> (478) 446-9234<br />
+                      </p>
+                      <p>
+                        <span class="small text-muted text-uppercase">Invoice #</span><br />
+                        <strong>1806</strong>
+                      </p>
+                    </div>
+                    <div class="col-md-5">
+                      <p class="small text-muted text-uppercase mb-2">Invoice to</p>
+                      <p class="mb-4">
+                        <strong>Walter Sawyer</strong><br /> Human Resources<br /> Ap #992-8933 Sagittis Street<br /> Ivanteyevka<br /> (803) 792-2559<br />
+                      </p>
+                      <p>
+                        <small class="small text-muted text-uppercase">Due date</small><br />
+                        <strong>April, 20, 2020</strong>
+                      </p>
+                    </div>
+                  </div> <!-- /.row -->
+                   <table class="table table-borderless table-striped">
+                    
+                    <thead>
+                      <tr class="primary">
+                        <th scope="col">Cheif Complaints</th>
+                        <th scope="col">Clinical Findings</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr >
+                            <td scope="col">Nothing</td>
+                            <td scope="col"> Covid -ve</td>
+                        </tr>
+                        
+                      </tbody>
+                   </table>
+
+                  <div class="col-md-5">
+                      <div class="text-right mr-2">
+                        <p class="mb-2 h6">
+                          <span class="text-muted">Investigations</span>
+                          <strong>X-Ray</strong>
+                        </p>
+                        <p class="mb-2 h6">
+                          <span class="text-muted">Diagonisis</span>
+                          <strong>Don't Eat Spicy Food</strong>
+                        </p>
+                        <p class="mb-2 h6">
+                          <span class="text-muted">Procedures Conducted </span>
+                          <span>15-08-2023</span>
+                        </p>
+                      </div>
+                    </div>
+                  <table class="table table-borderless table-striped">
+                    <thead>
+                   
+                      <tr>
+                        <th scope="col">Medicine No</th>
+                        <th scope="col">Medicine Name</th>
+                        <th scope="col" class="text-right">Dosage</th>
+                        <th scope="col" class="text-right">Feeding Rule</th>
+                        <th scope="col" class="text-right">Feeding Days</th>
+                      </tr>
+                    
+                    </thead>
+                    <tbody>
+                         {% for medicine in medicine_details_list %}
+                      <tr>
+                        <th scope="row"> {{ forloop.counter }}</th>
+                        <td> {{ medicine.tablet_name }}
+                          <!-- <span class="small text-muted">Design responsive website with existing prototype</span> -->
+                        </td>
+                        <td class="text-right">{{ medicine.dosage }} mg</td>
+                        <td class="text-right">{{ medicine.feeding_rule }}</td>
+                        <td class="text-right">{{ medicine.feeding_days }}</td>
+                      </tr>
+                       {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="row mt-5">
+                   
+                    <!-- <div class="col-md-5">
+                      <p class="text-muted small">
+                        <strong>Note :</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. </p>
+                    </div> -->
+                    <div class="col-md-5">
+                      <div class="text-right mr-2">
+                        <p class="mb-2 h6">
+                          <span class="text-muted">Investigations</span>
+                          <strong>X-Ray</strong>
+                        </p>
+                        <p class="mb-2 h6">
+                          <span class="text-muted">Advice Given </span>
+                          <strong>Don't Eat Spicy Food</strong>
+                        </p>
+                        <p class="mb-2 h6">
+                          <span class="text-muted">Next Visit </span>
+                          <span>15-08-2023</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div> 
+                </div> 
+              </div> 
+            </div>
+          </div>
+        </div
+    </main>
+  </body>
+</html>

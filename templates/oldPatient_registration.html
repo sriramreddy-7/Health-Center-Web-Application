@@ -1,0 +1,224 @@
+{% extends 'receptionist_base.html' %}
+{% load static %}
+{% block body %}
+<div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title text-danger">CCHC</h4>
+                    <form class="form-sample" method="GET" action="{% url 'receptionist:oldPatient_registration' %}" >
+                         {% csrf_token %}
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Search Id</label>
+                                    <div class="col-sm-9">
+                                      <input type="text" class="form-control" name="patient_id" placeholder="Enter the Patient ID or Mobile Number or Full Name" maxlength=16 required/>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Filter</label>
+                                    <div class="col-sm-9">
+                                      <select class="form-control form-control-lg" required>
+                                        <option>Patient ID</option>
+                                        <option>Mobile Number</option>
+                                        <option>Full Name</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        <center>
+                         <button type="submit" class="btn btn-inverse-primary btn-fw"> Search </button>
+                        </center>
+                    </form>
+                    </div>
+                </div>
+            </div>
+<hr>
+
+{% if patient %}
+
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title" style="color: red">
+        CCHC In Patient Registration Form
+      </h4>
+
+
+        <p class="card-description">Personal info</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Patient ID</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_id}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Full Name</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_name}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Gender</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_gender}}"
+
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Date of Birth</label>
+              <div class="col-sm-9">
+                  <div class="input-group">
+                        <input
+                      type="text"
+                      class="form-control"
+                      value="{{patient.patient_dob}}"
+                      readonly
+                />
+
+                      </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Age</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_age}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Gaurdian</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.guardian_name}}"
+
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="card-description">Address</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Relation</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.relationship}}"
+
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="pstate">Mobile Number</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.mobile_number}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="pdist"
+                >District</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.district}}"
+
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="paddress"
+                >State</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.state}}"
+
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="box">
+<center>
+<a href="/receptionist/receptionist_bookAppointment/{{patient.patient_id}}/" class="btn btn-danger btn-lg" type="submit" >
+Book Appointment
+</a>
+</center>
+<br>
+<!--</form>-->
+    </div>
+
+  </div>
+</div>
+</div>
+{% elif patient_id %}
+    <p>No patient found with ID: {{ patient_id }}</p>
+{% endif %}
+{% endblock %}

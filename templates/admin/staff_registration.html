@@ -1,0 +1,105 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">Staff Registration</h4>
+                    <p class="card-category">Complete your profile</p>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'hospital_admin:staff_registration' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="first_name">First Name</label>
+                                    <input type="text" class="form-control" name="first_name" id="first_name" required placeholder="Enter First Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="last_name">Last Name</label>
+                                    <input type="text" class="form-control" name="last_name" id="last_name" required placeholder="Enter Last Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="date_of_birth">Date of Birth</label>
+                                    <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="gender">Gender</label>
+                                    <select class="form-control" name="gender" id="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" required placeholder="Enter Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="phone_number">Phone Number</label>
+                                    <input type="text" class="form-control" name="phone_number" id="phone_number" required maxlength="10" placeholder="Enter Phone Number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="password">Password</label>
+                                    <input type="password" class="form-control" name="password" id="password" required placeholder="Enter Password">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="confirm_password">Confirm Password</label>
+                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" required placeholder="Confirm Password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="emp_profile_picture">Profile Picture</label>
+                                    <input type="file" class="form-control" name="emp_profile_picture" id="emp_profile_picture" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating" for="emp_type">Role</label>
+                                    <select class="form-control" name="emp_type" id="emp_type" required>
+                                        <option value="">Select Role</option>
+                                        <option value="Receptionist">Receptionist</option>
+                                        <option value="Laboratory_Technician">Laboratory Technician</option>
+                                        <option value="Junior_Doctor">Junior Doctor</option>
+                                        <option value="Consultant_Doctor">Consultant Doctor</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-primary pull-left">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

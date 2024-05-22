@@ -1,0 +1,98 @@
+{% extends 'consultantDoctor_base.html' %}
+{% load static %}
+{% block body %}
+
+ <div class="col-md-12">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <!-- table -->
+                      <table class="table datatables" id="dataTable-1">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Department</th>
+                            <!--<th>Company</th>-->
+                            <!--<th>Address</th>-->
+
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         {% for x in patient %}
+                          <tr>
+                            <td>
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <label class="custom-control-label"></label>
+                              </div>
+                            </td>
+                            <td>{{ x.patient_id }}</td>
+                            <td>{{ x.patient_name }}</td>
+                            <td>{{ x.patient_age }}</td>
+                            <td>{{ x.patient_dob}}</td>
+                            <!--<td>{{ record.appointment_date }}</td>-->
+                            <!--<td>{{ record.patient_token }}</td>-->
+
+                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="consultantDoctor_patientDiagonise_View_Edit/{{ x.patient_id }}/">Edit</a>
+                                <a class="dropdown-item" href="consultantDoctor_patientView/{{ x.patient_id }}/">View</a>
+                                <a class="dropdown-item" href="#">Assign</a>
+                              </div>
+                            </td>
+                          </tr>
+                    {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+    <script src="{% static 'assets/doctor/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/doctor/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script>
+      $('#dataTable-1').DataTable(
+      {
+        autoWidth: true,
+        "lengthMenu": [
+          [8,16, 32, 64, -1],
+          [8,16, 32, 64, "All"]
+        ]
+      });
+    </script>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+        <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+    <script>
+      $('#dataTable-1').DataTable(
+      {
+        autoWidth: true,
+        "lengthMenu": [
+          [16, 32, 64, -1],
+          [16, 32, 64, "All"]
+        ]
+      });
+    </script>
+{% endblock %}
