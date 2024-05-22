@@ -29,7 +29,15 @@ def receptionist_dashboard(request):
     today= timezone.now().date()
     appointment_count = Visit.objects.filter(visit_date=today).count()
     patient=Visit.objects.all()[:10]
-    return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count,'patient':patient,'emp':emp})
+    context = {
+        'emp': emp,
+        'patient_count': patient_count,
+        'appointment_count': appointment_count,
+        # 'recent_visits': recent_visits,
+        'patient': patient,
+    }
+    return render(request, 'receptionist_dashboard.html', context)
+    # return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count,'patient':patient,'emp':emp})
 
 @cache_control(no_cache=True, must_revalidate=True)
 def logout_view(request):

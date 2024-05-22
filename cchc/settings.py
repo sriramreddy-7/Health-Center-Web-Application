@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'home',
     'consultant_doctor',
     'hospital_admin',
-    'livereload',
+    
 ]
 
 
@@ -65,7 +65,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    'livereload.middleware.LiveReloadScript',
+    # 'livereload.middleware.LiveReloadScript',
     'django.middleware.security.SecurityMiddleware',
       "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
