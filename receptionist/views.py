@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,HttpResponseRedirect
 from patient.models import PatientPrimaryData,FT,Visit
 # Create your views here.
-
+from hospital_admin.models import Employee
 
 @login_required
 def receptionist_dashboard(request):
@@ -24,11 +24,12 @@ def receptionist_dashboard(request):
     #     return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count})
     # except:
     #     return HttpResponse("<h1> Please Login To Access this page</h1>")
+    emp=Employee.objects.get(emp_id=request.user)
     patient_count = PatientPrimaryData.objects.count()
     today= timezone.now().date()
     appointment_count = Visit.objects.filter(visit_date=today).count()
     patient=Visit.objects.all()[:10]
-    return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count,'patient':patient})
+    return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count,'patient':patient,'emp':emp})
 
 @cache_control(no_cache=True, must_revalidate=True)
 def logout_view(request):

@@ -7,13 +7,10 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <h2 class="mb-2 page-title">Employee List</h2>
-                <!-- <p class="card-text">DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, built upon the foundations of progressive enhancement, that adds all of these advanced features to any HTML table.</p> -->
                 <div class="row my-4">
-                    <!-- Small table -->
                     <div class="col-md-12">
                         <div class="card shadow">
                             <div class="card-body">
-                                <!-- table -->
                                 <table class="table datatables" id="dataTable-1">
                                     <thead>
                                         <tr>
@@ -26,6 +23,7 @@
                                             <th>Email</th>
                                             <th>DOB</th>
                                             <th>Gender</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
 
@@ -46,6 +44,9 @@
                                                 <td>{{ employee.user.email }}</td>
                                                 <td>{{ employee.emp_dob }}</td>
                                                 <td>{{ employee.emp_gender }}</td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editEmployeeModal" data-id="{{ employee.id }}" data-emp_id="{{ employee.emp_id }}" data-first_name="{{ employee.user.first_name }}" data-last_name="{{ employee.user.last_name }}" data-emp_type="{{ employee.emp_type }}" data-emp_phone="{{ employee.emp_phone }}" data-email="{{ employee.user.email }}" data-emp_dob="{{ employee.emp_dob }}" data-emp_gender="{{ employee.emp_gender }}">Edit</button>
+                                                </td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
@@ -59,4 +60,102 @@
     </div>
 </main>
 
+<!-- Edit Employee Modal -->
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" id="editEmployeeForm">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="employee_id" id="editEmployeeId">
+                    <div class="form-group">
+                        <label for="editFirstName">First Name</label>
+                        <input type="text" class="form-control" id="editFirstName" name="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name</label>
+                        <input type="text" class="form-control" id="editLastName" name="last_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmpType">Designation</label>
+                        <input type="text" class="form-control" id="editEmpType" name="emp_type">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmpPhone">Phone Number</label>
+                        <input type="text" class="form-control" id="editEmpPhone" name="emp_phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" class="form-control" id="editEmail" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmpDob">Date of Birth</label>
+                        <input type="date" class="form-control" id="editEmpDob" name="emp_dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmpGender">Gender</label>
+                        <select class="form-control" id="editEmpGender" name="emp_gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
+
+<script>
+    $('#editEmployeeModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var employeeId = button.data('id');
+        var empId = button.data('emp_id');
+        var firstName = button.data('first_name');
+        var lastName = button.data('last_name');
+        var empType = button.data('emp_type');
+        var empPhone = button.data('emp_phone');
+        var email = button.data('email');
+        var empDob = button.data('emp_dob');
+        var empGender = button.data('emp_gender');
+
+        var modal = $(this);
+        modal.find('#editEmployeeId').val(employeeId);
+        modal.find('#editFirstName').val(firstName);
+        modal.find('#editLastName').val(lastName);
+        modal.find('#editEmpType').val(empType);
+        modal.find('#editEmpPhone').val(empPhone);
+        modal.find('#editEmail').val(email);
+        modal.find('#editEmpDob').val(empDob);
+        modal.find('#editEmpGender').val(empGender);
+    });
+
+    $('#editEmployeeForm').on('submit', function (event) {
+        event.preventDefault();
+
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'hospital_admin:edit_employee' %}",
+            data: formData,
+            success: function (response) {
+                location.reload();
+            },
+            error: function (response) {
+                alert('An error occurred while updating the employee details.');
+            }
+        });
+    });
+</script>

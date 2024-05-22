@@ -64,10 +64,11 @@
                 class="navbar-brand brand-logo"
                 href="{% url 'receptionist:receptionist_dashboard' %}"
               >
-                <img
+                <!-- <img
                   src="{% static 'assets/rp/images/logo.svg' %}"
                   alt="logo"
-                />
+                /> -->
+                <h5 class="text-primary">Welcome {{ emp.user.first_name }} {{emp.user.last_name }} |CCHC Receptionist Dashboard </h5>
                 <span class="font-12 d-block font-weight-light"
                   >Receptionist Dashboard
                 </span>
@@ -103,15 +104,15 @@
                     aria-expanded="false"
                   >
                     <div class="nav-profile-img">
-                      <img src="#" alt="image" />
+                      <img src="{{ emp.emp_profile_picture.url }}" alt="image" />
                     </div>
                     <div class="nav-profile-text">
                       <p class="text-black font-weight-semibold m-0">
                         {{ user.username }} !
                       </p>
-                      <span class="font-13 online-color"
+                      <!-- <span class="font-13 online-color"
                         >online <i class="mdi mdi-chevron-down"></i
-                      ></span>
+                      ></span> -->
                     </div>
                   </a>
                   <div
