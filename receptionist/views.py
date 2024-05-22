@@ -14,6 +14,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 from patient.models import PatientPrimaryData,FT,Visit
 # Create your views here.
 from hospital_admin.models import Employee
+from datetime import datetime
+
 
 @login_required
 def receptionist_dashboard(request):
@@ -170,60 +172,46 @@ def receptionist_patientSearch(request):
 
 
 
-def receptionist_bookAppointment(request,patient_id):
-    if request.method =='POST':
-        patient_id=request.POST.get('patient_id')
-        patient=PatientPrimaryData.objects.get(patient_id=patient_id)
-        visitingdate=request.POST['visitingdate']
-        patient_type=request.POST['patient_type']
-        # doctorname=request.POST['doctorname']
-        # docfee=request.POST.get('docfee')
-        # gst=request.POST.get('gst')
-        # total_amount=request.POST.get('total_amount')
-        doctorname='Sriram Reddy'
-        docfee=1000
-        gst=18
-        total_amount=1500
-        print('patient_id',patient_id)
-        print('patient',patient)
-        print('visitingdate',visitingdate)
-        print('doctorname',doctorname)
-        print('docfee',docfee)
-        print('patient_type',patient_type)
-        print('gst',gst)
-        print('total_amount',total_amount)
-        # context={
-        #     'patient_id',
-        #     'patient',
-        #     'visitingdate',
-        #     'doctorname',
-        #     'docfee'
-        #     'patient_type',
-        #     'gst',
-        #     'total_amount',
-        # }
-        visit=Visit(patient_id=patient,doctor_name=doctorname,visit_date=visitingdate,patient_type=patient_type,doctor_fee=docfee,gst=gst,total_amount=total_amount,subtotal=total_amount,discount=gst)
+def receptionist_bookAppointment(request, patient_id):
+    if request.method == 'POST':
+        patient = PatientPrimaryData.objects.get(patient_id=patient_id)
+        visitingdate = request.POST['visitingdate']
+        patient_type = request.POST['patient_type']
+        doctorname = request.POST['doctorname']
+        doctor_fee = float(request.POST['doctor_fee'])
+        gst = float(request.POST['gst'])
+        subtotal = doctor_fee
+        total_amount = float(request.POST['total_amount'])
+        
+        visit = Visit(
+            patient_id=patient,
+            doctor_name=doctorname,
+            visit_date=visitingdate,
+            patient_type=patient_type,
+            doctor_fee=doctor_fee,
+            gst=gst,
+            subtotal=subtotal,
+            total_amount=total_amount,
+            discount=0  # Assuming no discount is applied
+        )
         visit.save()
-        ap_id=visit.appointment_id
-        ap_det=Visit.objects.get(appointment_id=ap_id)
-        pid=visit.patient_id
-        pd_det=PatientPrimaryData.objects.get(patient_id=pid)
-        context={
-            'ap_det':ap_det,
-            'pd_det':pd_det,
+
+        ap_id = visit.appointment_id
+        ap_det = Visit.objects.get(appointment_id=ap_id)
+        pd_det = PatientPrimaryData.objects.get(patient_id=patient_id)
+
+        context = {
+            'ap_det': ap_det,
+            'pd_det': pd_det,
         }
-        print(ap_det)
-        # return redirect('receptionist:appointment')
-        # return HttpResponse('<h1>Appointment is Generated Sucessfully</h1>')
-        return render(request,'appointment.html',context)
-    
+        return render(request, 'appointment.html', context)
+
     else:
-        patient=PatientPrimaryData.objects.get(patient_id=patient_id)
-        context={
-            'patient':patient,
-        }    
-        return render(request,'receptionist_bookAppointment.html',context)
-    
+        patient = PatientPrimaryData.objects.get(patient_id=patient_id)
+        context = {
+            'patient': patient,
+        }
+        return render(request, 'receptionist_bookAppointment.html', context)
     
 
 def receptionist_patientVisit(request):

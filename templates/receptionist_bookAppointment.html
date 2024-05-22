@@ -45,32 +45,17 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Patient Id</label>
+              <label class="col-sm-3 col-form-label">Full Name</label>
               <div class="col-sm-9">
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  value="{{ patient.patient_id }}"
+                  value="{{ patient.patient_name }}"
                   readonly
                 />
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-lg-3 col-form-label">Full Name</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  value="{{patient.patient_name}}"
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
           <div class="col-md-6">
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Gender</label>
@@ -78,50 +63,7 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  value="{{patient.patient_gender}}"
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Date of Birth</label>
-              <div class="col-sm-9">
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-lg"
-                    value="{{patient.patient_dob}}"
-                    readonly
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Age</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{patient.patient_age}}"
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="pstate">Mobile Number</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{patient.mobile_number}}"
+                  value="{{ patient.patient_gender }}"
                   readonly
                 />
               </div>
@@ -156,7 +98,7 @@
                   name="doctorname"
                   onchange="calculateInvoice()"
                 >
-                  <!-- <option value="">Select Doctor</option> -->
+                  <option value="">Select Doctor</option>
                 </select>
               </div>
             </div>
@@ -169,6 +111,7 @@
               <label class="col-sm-6 col-form-label">Doctor Fee (without GST):</label>
               <div class="col-sm-6">
                 <span class="form-control form-control-lg" id="fee_without_gst"></span>
+                <input type="hidden" id="doctor_fee" name="doctor_fee">
               </div>
             </div>
           </div>
@@ -177,6 +120,7 @@
               <label class="col-sm-3 col-form-label">GST Amount:</label>
               <div class="col-sm-9">
                 <span class="form-control form-control-lg" id="gst_amount"></span>
+                <input type="hidden" id="gst" name="gst">
               </div>
             </div>
           </div>
@@ -185,6 +129,7 @@
               <label class="col-sm-6 col-form-label">Total Fee (including GST):</label>
               <div class="col-sm-6">
                 <span class="form-control form-control-lg" id="total_fee"></span>
+                <input type="hidden" id="total_amount" name="total_amount">
               </div>
             </div>
           </div>
@@ -243,10 +188,20 @@
       document.getElementById("fee_without_gst").innerHTML = feeWithoutGST.toFixed(2);
       document.getElementById("gst_amount").innerHTML = gstAmount.toFixed(2);
       document.getElementById("total_fee").innerHTML = totalFee.toFixed(2);
+
+      // Set hidden inputs
+      document.getElementById("doctor_fee").value = feeWithoutGST.toFixed(2);
+      document.getElementById("gst").value = gstAmount.toFixed(2);
+      document.getElementById("total_amount").value = totalFee.toFixed(2);
     } else {
       document.getElementById("fee_without_gst").innerHTML = "";
       document.getElementById("gst_amount").innerHTML = "";
       document.getElementById("total_fee").innerHTML = "";
+
+      // Reset hidden inputs
+      document.getElementById("doctor_fee").value = "";
+      document.getElementById("gst").value = "";
+      document.getElementById("total_amount").value = "";
     }
   }
 
