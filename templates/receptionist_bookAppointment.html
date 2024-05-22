@@ -168,8 +168,9 @@
 
     doctors.forEach(function(doctor) {
       var option = document.createElement("option");
-      option.value = doctor.fee;
+      option.value = doctor.name; // Set value to doctor's name
       option.text = doctor.name;
+      option.setAttribute('data-fee', doctor.fee); // Store fee as data attribute
       doctorDropdown.add(option);
     });
 
@@ -177,7 +178,9 @@
   }
 
   function calculateInvoice() {
-    var doctorFee = document.getElementById("doctor_select").value;
+    var doctorSelect = document.getElementById("doctor_select");
+    var selectedOption = doctorSelect.options[doctorSelect.selectedIndex];
+    var doctorFee = selectedOption.getAttribute('data-fee');
     var gstRate = 18;
 
     if (doctorFee) {

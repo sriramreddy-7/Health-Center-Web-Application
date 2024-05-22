@@ -195,6 +195,7 @@ def receptionist_bookAppointment(request, patient_id):
             discount=0  # Assuming no discount is applied
         )
         visit.save()
+        print(doctorname)
 
         ap_id = visit.appointment_id
         ap_det = Visit.objects.get(appointment_id=ap_id)
@@ -231,3 +232,5 @@ def receptionist_patientVisit(request):
     
 def receptionist_profile(request):
     return render(request,'receptionist_profile.html')
+
+
