@@ -1,191 +1,137 @@
 {% load static %}
-<link href="{% static 'assets/icons/hb.png' %}" rel="icon" />
-<link
-  rel="stylesheet"
-  href="{% static 'assets/rp/vendors/mdi/css/materialdesignicons.min.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'assets/rp/vendors/flag-icon-css/css/flag-icon.min.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'assets/rp/vendors/css/vendor.bundle.base.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'assets/rp/vendors/jquery-bar-rating/css-stars.css' %}"
-/>
-<link
-  rel="stylesheet"
-  href="{% static 'assets/rp/vendors/font-awesome/css/font-awesome.min.css' %}"
-/>
-<link rel="stylesheet" href="{% static 'assets/rp/css/demo_2/style.css' %}" />
-<title>{{ ap_det.appointment_id }}</title>
-<script>
-  function printPage() {
-    var element = document.getElementById("toHide");
-    element.style.display = "none";
-    window.print();
-    element.style.display = "block";
-  }
-</script>
-<div class="container-fluid page-body-wrapper">
-  <div class="main-panel">
-    <div class="content-wrapper">
-      <div id="toHide">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{% static 'assets/icons/hb.png' %}" rel="icon" />
+  <link rel="stylesheet" href="{% static 'assets/rp/vendors/mdi/css/materialdesignicons.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/rp/vendors/flag-icon-css/css/flag-icon.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/rp/vendors/css/vendor.bundle.base.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/rp/vendors/jquery-bar-rating/css-stars.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/rp/vendors/font-awesome/css/font-awesome.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/rp/css/demo_2/style.css' %}" />
+  <title>{{ ap_det.appointment_id }}</title>
+  <script>
+    function printPage() {
+      var element = document.getElementById("toHide");
+      element.style.display = "none";
+      window.print();
+      element.style.display = "block";
+    }
+  </script>
+</head>
+<body>
+  <div class="container-fluid page-body-wrapper">
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div id="toHide">
+          <br />
+          <h3 class="page-title" style="text-align: center">Appointment Acknowledgement</h3>
+          <hr py-4 />
+        </div>
         <br />
-        <h3 class="page-title" style="text-align: center">
-          Appointment Acknowledgement
-        </h3>
-        <hr py-4 />
-      </div>
-      <br />
-
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card px-2">
-            <div class="card-body">
-              <div
-                class="container-fluid d-flex justify-content-between align-items-center"
-              >
-                <div class="d-flex align-items-center">
-                  <img
-                    src="{% static 'assets/icons/hb.png' %}"
-                    class="me-2"
-                    style="height: 150px; width: 150px; object-fit: contain"
-                  />
-
-                  <!--<h3 class="text-left my-5 me-2">Crazy Coders Health Center</h3>-->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card px-2">
+              <div class="card-body">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <img src="{% static 'assets/icons/hb.png' %}" class="me-2" style="height: 150px; width: 150px; object-fit: contain" />
+                  </div>
+                  <div>
+                    <h3 class="mb-2" style="color: red">Crazy Coders Health Center</h3>
+                    <p class="mb-1">Mulugu Rd, Vidya Nagar, Warangal</p>
+                    <p class="mb-1">Telangana 506007, India</p>
+                    <p class="mb-1">info@cchc.com</p>
+                    <p class="mb-1"><i class="uil uil-phone me-1"></i> +91 9876543210</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 class="mb-2" style="color: red">
-                    Crazy Coders Health Center
-                  </h3>
-                  <p class="mb-1">Mulugu Rd, Vidya Nagar, Warangal</p>
-                  <p class="mb-1">Telangana 506007, India</p>
-                  <p class="mb-1">info@cchc.com</p>
-                  <p class="mb-1">
-                    <i class="uil uil-phone me-1"></i> +91 9876543210
-                  </p>
+                <hr />
+              </div>
+              <div class="container-fluid d-flex justify-content-between">
+                <div class="col-lg-3 pl-0">
+                  <p class="mb-0 mt-5">Appointment ID : {{ ap_det.appointment_id }}</p>
+                  <p class="mb-0 mt-5">Visting Date : {{ap_det.visit_date}}</p>
+                  <p>Invoice Date: {{ ap_det.today_date }}</p>
                 </div>
               </div>
-              <hr />
-            </div>
-            <!--<div class="container-fluid d-flex justify-content-between">-->
-            <!--  <div class="col-lg-3 pl-0">-->
-            <!--    <p class="mt-5 mb-2"><b>Plus Admin</b></p>-->
-            <!--    <p>104,<br>Minare SK,<br>Canada, K1A 0G9.</p>-->
-            <!--  </div>-->
-            <!--  <div class="col-lg-3 pr-0">-->
-            <!--    <p class="mt-5 mb-2 text-right"><b>Invoice to</b></p>-->
-            <!--    <p class="text-right">Gaala & Sons,<br> C-201, Beykoz-34800,<br> Canada, K1A 0G9.</p>-->
-            <!--  </div>-->
-            <!--</div>-->
-            <div class="container-fluid d-flex justify-content-between">
-              <div class="col-lg-3 pl-0">
-                <p class="mb-0 mt-5">
-                  Appointment ID : {{ ap_det.appointment_id }}
-                </p>
-                <p class="mb-0 mt-5">Visting Date : {{ap_det.visit_date}}</p>
-                <p>Invoice Date: {{ ap_det.today_date }}</p>
+              <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+                <div class="table-responsive w-100">
+                  <table class="table">
+                    <thead>
+                      <tr class="bg-primary text-white">
+                        <th>Patient ID</th>
+                        <th>Token Number</th>
+                        <th>Patient Name</th>
+                        <th>Gender</th>
+                        <th>Date of Birth</th>
+                        <th>Age</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ pd_det.patient_id }}</td>
+                        <td><div class="badge badge-pill badge-danger">{{ ap_det.patient_token }}</div></td>
+                        <td>{{ pd_det.patient_name }}</td>
+                        <td>{{ pd_det.patient_gender }}</td>
+                        <td>{{ pd_det.patient_dob }}</td>
+                        <td>{{ pd_det.patient_age }}</td>
+                      </tr>
+                      <tr>
+                        <th>Patient Type</th>
+                        <th>Doctor Name</th>
+                      </tr>
+                      <tr>
+                        <td>{{ap_det.patient_type }}</td>
+                        <td>{{ap_det.doctor_name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="container-fluid mt-5 w-100">
+                <p class="text-right mb-2">Doctor Fee : {{ap_det.doctor_fee}}/-</p>
+                <p class="text-right">GST (18)% : {{ap_det.gst}}/-</p>
+                <p class="text-right mb-2">Sub - Total amount: {{ap_det.subtotal }}/-</p>
+                <h4 class="text-right mb-5">Total : {{ap_det.total_amount }} /-</h4>
+                <hr />
               </div>
             </div>
-            <div
-              class="container-fluid mt-5 d-flex justify-content-center w-100"
-            >
-              <div class="table-responsive w-100">
-                <table class="table">
-                  <thead>
-                    <tr class="bg-primary text-white">
-                      <th>Patient ID</th>
-                      <th>Token Number</th>
-                      <th>Patient Name</th>
-                      <th>Gender</th>
-                      <th>Date of Birth</th>
-                      <th>Age</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <td>{{ pd_det.patient_id }}</td>
-                    <td>
-                      <div class="badge badge-pill badge-danger">
-                        {{ ap_det.patient_token }}
-                      </div>
-                    </td>
-                    <td>{{ pd_det.patient_name }}</td>
-                    <td>{{ pd_det.patient_gender }}</td>
-                    <td>{{ pd_det.patient_dob }}</td>
-                    <td>{{ pd_det.patient_age }}</td>
-                  </tbody>
-                  <tr>
-                    <th>Patient Type</th>
-                    <th>Doctor Name</th>
-                  </tr>
-                  <tr>
-                    <td>{{ap_det.patient_type }}</td>
-                    <td>{{ap_det.doctor_name }}</td>
-                  </tr>
-                </table>
+            <div class="d-print-none mt-4">
+              <div class="container-fluid w-100">
+                <button class="btn btn-primary mt-4 ms-2" onclick="printPage()">
+                  <i class="mdi mdi-printer me-1"></i>Print
+                </button>
+                <!-- <a href="/hospital_admin/admin_dashboard" class="btn btn-success float-right mt-4" role="button">
+                  <i class="mdi mdi-telegram me-1"></i>Dashboard
+                </a> -->
               </div>
-            </div>
-            <div class="container-fluid mt-5 w-100">
-              <p class="text-right mb-2">
-                Doctor Fee : {{ap_det.doctor_fee}}/-
-              </p>
-              <p class="text-right">GST (18)% : {{ap_det.gst}}/-</p>
-              <p class="text-right mb-2">
-                Sub - Total amount: {{ap_det.subtotal }}/-
-              </p>
-              <h4 class="text-right mb-5">
-                Total : {{ap_det.total_amount }} /-
-              </h4>
-              <hr />
-            </div>
-          </div>
-          <div class="d-print-none mt-4">
-            <div class="container-fluid w-100">
-              <button
-                class="btn btn-primary mt-4 ms-2"
-                id="printButton"
-                onclick="printPage()"
-              >
-                <i class="mdi mdi-printer me-1"></i>Print
-              </button>
-              <a
-                href="/receptionist/receptionist_dashboard"
-                id="toHide"
-                class="btn btn-success float-right mt-4"
-                role="button"
-                id="printButton"
-                ><i class="mdi mdi-telegram me-1"></i>Dashboard</a
-              >
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script src="{% static 'assets/rp/vendors/datatables.net/jquery.dataTables.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
-
-<script src="{% static 'assets/rp/js/sdscrpit.js' %}"></script>
-
-<script src="{% static 'assets/rp/vendors/js/vendor.bundle.base.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/jquery-bar-rating/jquery.barrating.min.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/chart.js/Chart.min.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/flot/jquery.flot.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/flot/jquery.flot.resize.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/flot/jquery.flot.categories.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/flot/jquery.flot.fillbetween.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/flot/jquery.flot.stack.js' %}"></script>
-<script src="{% static 'assets/rp/js/off-canvas.js' %}"></script>
-<script src="{% static 'assets/rp/js/hoverable-collapse.js' %}"></script>
-<script src="{% static 'assets/rp/js/misc.js' %}"></script>
-<script src="{% static 'assets/rp/js/settings.js' %}"></script>
-<script src="{% static 'assets/rp/js/todolist.js' %}"></script>
-<script src="{% static 'assets/rp/js/chart.js' %}"></script>
-<script src="{% static 'assets/rp/js/dashboard.js' %}"></script>
-<script src="{% static 'assets/rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/datatables.net/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+  <script src="{% static 'assets/rp/js/sdscrpit.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/jquery-bar-rating/jquery.barrating.min.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/flot/jquery.flot.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/flot/jquery.flot.resize.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/flot/jquery.flot.categories.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/flot/jquery.flot.fillbetween.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/flot/jquery.flot.stack.js' %}"></script>
+  <script src="{% static 'assets/rp/js/off-canvas.js' %}"></script>
+  <script src="{% static 'assets/rp/js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'assets/rp/js/misc.js' %}"></script>
+  <script src="{% static 'assets/rp/js/settings.js' %}"></script>
+  <script src="{% static 'assets/rp/js/todolist.js' %}"></script>
+  <script src="{% static 'assets/rp/js/chart.js' %}"></script>
+  <script src="{% static 'assets/rp/js/dashboard.js' %}"></script>
+  <script src="{% static 'assets/rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+</body>
+</html>

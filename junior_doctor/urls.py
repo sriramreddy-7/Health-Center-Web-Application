@@ -13,7 +13,8 @@ urlpatterns = [
     path('juniorDoctor_apl',views.juniorDoctor_apl,name="juniorDoctor_apl"),
     path('juniorDoctor_appointmentList_FilterbyDate',views.juniorDoctor_appointmentList_FilterbyDate,name="juniorDoctor_appointmentList_FilterbyDate"),
     path('juniorDoctor_patientDiagonise/<str:appointment_id>/',views.juniorDoctor_patientDiagonise,name="juniorDoctor_patientDiagonise"),
-    path('juniorDoctor_patientDiagonise_View_Edit/<str:patient_id>/',views.juniorDoctor_patientDiagonise_View_Edit,name="juniorDoctor_patientDiagonise_View_Edit"),
+    # path('juniorDoctor_patientDiagonise_View_Edit/<str:patient_id>/',views.juniorDoctor_patientDiagonise_View_Edit,name="juniorDoctor_patientDiagonise_View_Edit"),
     path('juniorDoctor_patientView/<str:patient_id>/',views.juniorDoctor_patientView,name="juniorDoctor_patientView"),
+    path('juniorDoctor_patientDiagonise_View_Edit/<str:appointment_id>/', views.juniorDoctor_patientDiagonise_View_Edit, name="juniorDoctor_patientDiagonise_View_Edit"),
     
 ]

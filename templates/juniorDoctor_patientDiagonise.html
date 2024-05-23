@@ -1,146 +1,146 @@
 {% extends 'juniorDoctor_base.html' %}
 {% load static %}
 {% block body %}
-    <div class="col-md-12">
-                  <div class="card shadow mb-4">
-                    <div class="card-header">
-                      <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagonise Form </strong>
+<div class="col-md-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagnose Form</strong>
+        </div>
+        <div class="card-body">
+            <form action="/junior_doctor/juniorDoctor_patientDiagonise/{{ pd.patient_id }}/" method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="patient_token">Patient Appointment ID</label>
+                        <input type="text" class="form-control" id="appointment_id" name="appointment_id" value="{{ad.appointment_id}}" readonly>
                     </div>
-                    <div class="card-body">
-                      <form action="/junior_doctor/juniorDoctor_patientDiagonise/{{ pd.patient_id }}/" method="post">
-                          {% csrf_token %}
-                          <div class="form-row">
-                          <div class="form-group col-md-12">
-                            <label for="patient_token">Patient Appointment ID</label>
-                            <input type="text" class="form-control" id="appointment_id" name="appointment_id" value="{{ad.appointment_id}}" readonly>
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-4">
-                            <label for="patient_token">Patient Token Number</label>
-                            <input type="text" class="form-control" id="patient_token" value="{{ad.patient_token}}" readonly>
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="patient_id">Patient ID</label>
-                            <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{pd.patient_id}}" readonly>
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="patient_name">Patient Name</label>
-                            <input type="text" class="form-control" id="patient_name" value="{{pd.patient_name}}" readonly>
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-4">
-                            <label for="gender">Gender</label>
-                            <input type="text" class="form-control" id="gender" value="{{pd.patient_gender}}" readonly>
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="dob">Date of Birth</label>
-                            <input type="text" class="form-control" id="dob" value="{{pd.patient_dob}}" readonly>
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="age">Age</label>
-                            <input type="text" class="form-control" id="age" value="{{pd.patient_age}}" readonly>
-                          </div>
-                        </div>
-                        <hr />
-                        <div class="form-row">
-                          <div class="form-group col-md-3">
-                            <label for="height">Height</label>
-                            <input type="text" class="form-control" id="height"  name="height" placeholder="Enter the Patient Height">
-                          </div>
-                          <div class="form-group col-md-3">
-                            <label for="weight">Weight</label>
-                            <input type="text" class="form-control" id="weight" name="weight" placeholder="Enter the Patient Weight">
-                          </div>
-                          <div class="form-group col-md-3">
-                            <label for="bp">BP</label>
-                            <input type="text" class="form-control" id="bp" name="bp" placeholder="Enter the Patient BP">
-                          </div>
-                          <div class="form-group col-md-3">
-                           <label for="blood_group">Blood Group</label>
-                            <select class="custom-select" id="blood_group" name="blood_group" required>
-                              <option value="A+">   A+   </option>
-                              <option value="A-">   A-   </option>
-                              <option value="B+">   B+   </option>
-                              <option value="B-">   B-   </option>
-                              <option value="AB+">  AB+  </option>
-                              <option value="AB-">  AB-  </option>
-                              <option value="O+">   O+   </option>
-                              <option value="O-">   O-   </option>
-                            </select>
-                          </div>
-                        </div>
-                         <div class="form-row">
-                          <div class="form-group col-md-4">
-                            <label for="pulse">Pulse</label>
-                            <input type="text" class="form-control" id="pulse"  name="pulse" placeholder="Enter the Patient Pulse Rate">
-                          </div>
-                          <div class="form-group col-md-4">
-                           <label for="is_diabetic">IS Diabetic</label>
-                            <select class="custom-select" id="is_diabetic" name="is_diabetic" onchange="toggleInput()" required>
-                              <option value="True">Yes</option>
-                              <option value="False">No</option>
-                            </select>
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="diabetic_level">Enter Sugar Level</label>
-                            <input type="text" class="form-control" id="diabetic_level" name="diabetic_level" placeholder="Enter the Patient BP" disabled>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="remarks">Remarks</label>
-                          <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Enter any remarks if you found any">
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="pov">Purpose Of Visit</label>
-                          <select class="form-control" name="pov" id="pov">
-                              <option value="General Checkup">General Checkup</option>
-                              <option value="Abnormal Pain">Abnormal Pain</option>
-                          </select>
-                          </div>
-                          <div class="form-group col-md-6">
-                          <label for="phi">Previous Health Issues</label>
-                          <select class="form-control select2-multi" id="phi" name="phi">
-                            <optgroup label=" Respiratory and Neurological Health Issues">
-                              <option value="Asthma">Asthma</option>
-                              <option value="Migraine headaches">Migraine headaches</option>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="patient_token">Patient Token Number</label>
+                        <input type="text" class="form-control" id="patient_token" value="{{ad.patient_token}}" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="patient_id">Patient ID</label>
+                        <input type="text" class="form-control" id="patient_id" name="patient_id" value="{{pd.patient_id}}" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="patient_name">Patient Name</label>
+                        <input type="text" class="form-control" id="patient_name" value="{{pd.patient_name}}" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="gender">Gender</label>
+                        <input type="text" class="form-control" id="gender" value="{{pd.patient_gender}}" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="dob">Date of Birth</label>
+                        <input type="text" class="form-control" id="dob" value="{{pd.patient_dob}}" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="age">Age</label>
+                        <input type="text" class="form-control" id="age" value="{{pd.patient_age}}" readonly>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="height">Height</label>
+                        <input type="text" class="form-control" id="height" name="height" placeholder="Enter the Patient Height">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="weight">Weight</label>
+                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Enter the Patient Weight">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="bp">BP</label>
+                        <input type="text" class="form-control" id="bp" name="bp" placeholder="Enter the Patient BP">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="blood_group">Blood Group</label>
+                        <select class="custom-select" id="blood_group" name="blood_group" required>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="pulse">Pulse</label>
+                        <input type="text" class="form-control" id="pulse" name="pulse" placeholder="Enter the Patient Pulse Rate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="is_diabetic">Is Diabetic</label>
+                        <select class="custom-select" id="is_diabetic" name="is_diabetic" onchange="toggleInput()" required>
+                            <option value="False" selected>No</option>
+                            <option value="True">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="diabetic_level">Enter Sugar Level</label>
+                        <input type="text" class="form-control" id="diabetic_level" name="diabetic_level" placeholder="Enter the Patient Sugar Level" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="remarks">Remarks</label>
+                    <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Enter any remarks if you found any">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="pov">Purpose Of Visit</label>
+                        <select class="form-control" name="pov" id="pov">
+                            <option value="General Checkup">General Checkup</option>
+                            <option value="Abnormal Pain">Abnormal Pain</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="phi">Previous Health Issues</label>
+                        <select class="form-control select2-multi" id="phi" name="phi">
+                            <optgroup label="Respiratory and Neurological Health Issues">
+                                <option value="Asthma">Asthma</option>
+                                <option value="Migraine headaches">Migraine headaches</option>
                             </optgroup>
                             <optgroup label="Metabolic and Chronic Conditions">
-                              <option value="Hypertension (High Blood Pressure)">Hypertension (High Blood Pressure)</option>
-                              <option value="Type 2 Diabetes">Type 2 Diabetes</option>
-                              <option value="Osteoarthritis">Osteoarthritis</option>
-                              <option value="Gastroesophageal Reflux Disease (GERD)">Gastroesophageal Reflux Disease (GERD)</option>
-                              <option value="Depression">Depression </option>
-                              <option value="Coronary Artery Disease">Coronary Artery Disease</option>
-                              <option value="Thyroid Disorder">Thyroid Disorder</option>
-                              <option value="Chronic Kidney Disease">Chronic Kidney Disease </option>
+                                <option value="Hypertension (High Blood Pressure)">Hypertension (High Blood Pressure)</option>
+                                <option value="Type 2 Diabetes">Type 2 Diabetes</option>
+                                <option value="Osteoarthritis">Osteoarthritis</option>
+                                <option value="Gastroesophageal Reflux Disease (GERD)">Gastroesophageal Reflux Disease (GERD)</option>
+                                <option value="Depression">Depression</option>
+                                <option value="Coronary Artery Disease">Coronary Artery Disease</option>
+                                <option value="Thyroid Disorder">Thyroid Disorder</option>
+                                <option value="Chronic Kidney Disease">Chronic Kidney Disease</option>
                             </optgroup>
-                          </select>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col text-center">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div> <!-- /.card-body -->
+    </div> <!-- /.card -->
+</div> <!-- /.col -->
+<script>
+    function toggleInput() {
+        var dropdown = document.getElementById("is_diabetic");
+        var textInput = document.getElementById("diabetic_level");
 
-                          </div>
-                          <center>
-                               <button type="submit" class="btn btn-primary" style="text-align:center;">Save Changes</button>
-                          </center>
-
-                      </form>
-                    </div> <!-- /. card-body -->
-                  </div> <!-- /. card -->
-                </div> <!-- /. col -->
-              </div> <!-- /. end-section -->
-              <script>
-                function toggleInput() { 
-                var dropdown = document.getElementById("is_diabetic");
-                var textInput = document.getElementById("diabetic_level");
-
-                if (dropdown.value === "True") {
-                  textInput.disabled = false;  // Enable text input
-                } else {
-                  textInput.disabled = true;   // Disable text input
-                }
-              }
-
-
-              </script>
+        if (dropdown.value === "True") {
+            textInput.disabled = false;  // Enable text input
+            textInput.value = "";  // Clear the input field
+        } else {
+            textInput.disabled = true;   // Disable text input
+            textInput.value = "0";  // Set the value to 0
+        }
+    }
+</script>
 {% endblock %}
