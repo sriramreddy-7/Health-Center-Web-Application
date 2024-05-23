@@ -1,0 +1,88 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block body %}
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+
+                <!-- <p class="card-text">DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible
+                    tool, built upon the foundations of progressive enhancement, that adds all of these advanced
+                    features to any HTML table. </p> -->
+                <div class="row my-0">
+                    <!-- Small table -->
+                    <div class="col-md-12">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <!-- table -->
+                                <h3 class="mb-2 page-title">Patient Appointment's</h3>
+                                <table class="table datatables" id="dataTable-1">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th></th> -->
+                                            <th>Token</th>
+                                            <th>Patient ID</th>
+                                            <th>Appointment ID</th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>DOB</th>
+                                            <th>Patient Type</th>
+                                            <th>Doctor Name</th>
+                                            <th>Appointment Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for patient in visitor %}
+                                        <tr>
+                                            <!-- <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input">
+                                                    <label class="custom-control-label"></label>
+                                                </div>
+                                            </td> -->
+                                            <td>{{ patient.patient_token}}</td>
+                                            <td>{{ patient.patient_id }}</td>
+                                            <td>{{ patient.appointment_id }}</td>
+                                            <td>{{patient.patient_id.patient_name}}</td>
+                                            <td>{{ patient.patient_id.patient_gender}}</td>
+                                            <td>{{ patient.patient_id.patient_dob}}</td>
+
+                                            <td>{{ patient.patient_type }}</td>
+                                            <td>{{ patient.doctor_name }}</td>
+                                            <td>{{ patient.today_date }}</td>
+                                            <td>
+                                                <a href="/hospital_admin/appointment/{{ patient.appointment_id }}/" class="btn btn-primary" style="font-size: 1px;" target="_blank">
+                                                    <i class="fe fe-file-plus" style="font-size: 24px;"></i> 
+                                                </a>
+                                            </td>
+                                            <!-- <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="text-muted sr-only">Action</span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                    <a class="dropdown-item" href="#">Assign</a>
+                                                </div>
+                                            </td> -->
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+
+{% endblock %}

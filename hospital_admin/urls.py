@@ -10,5 +10,7 @@ urlpatterns = [
     path('login_logs',views.login_logs,name="login_logs"),
     path('staff_registration',views.staff_registration,name='staff_registration'),
     path("employee_list",views.employee_list,name="employee_list"),
+    path('patient_appointments',views.patient_appointments,name="patient_appointments"),
+    path("appointment/<str:ap_id>/",views.appointment,name="appointment")
 
 ]

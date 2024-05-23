@@ -15,17 +15,30 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry
 from hospital_admin.models import Employee
+from patient.models import Visit ,PatientPrimaryData
+from django.utils import timezone
+from django.db.models import Sum
+
+
+
 
 def admin_dashboard(request):
-    # emp=Employee.objects.get(username=request.user)
-    # context= {
-    #     'emp':emp
-    # }
-    user=User.objects.get(username=request.user)
-    context={
-        'user':user
+    user = User.objects.get(username=request.user)
+    
+    # Calculate earnings
+    total_earnings = Visit.objects.aggregate(total=Sum('total_amount'))['total'] or 0
+    today = timezone.now().date()
+    today_earnings = Visit.objects.filter(visit_date=today).aggregate(total=Sum('total_amount'))['total'] or 0
+    doctor_earnings = Visit.objects.values('doctor_name').annotate(total=Sum('total_amount')).order_by('doctor_name')
+
+    context = {
+        'user': user,
+        'total_earnings': total_earnings,
+        'today_earnings': today_earnings,
+        'doctor_earnings': doctor_earnings,
     }
-    return render(request,'admin_dashboard.html',context)
+    
+    return render(request, 'admin_dashboard.html', context)
 
 @cache_control(no_cache=True, must_revalidate=True)
 def logout_view(request):
@@ -113,3 +126,28 @@ def staff_registration(request):
 def employee_list(request):
     employees = Employee.objects.all()
     return render(request, 'admin/employee_list.html', {'employees': employees})
+
+
+def patient_appointments(request):
+    visitor=Visit.objects.all()
+    context = {
+        'visitor': visitor,
+    }
+    return render(request,'admin/patient_appointments.html',context)
+
+
+def appointment(request,ap_id):
+    # patient=PatientPrimaryData.objects.get(patient_id=patient_id)
+    # pid=patient.patient_id
+    # info=FT(patient_id=pid)
+    # info.save()
+    # flag=FT.objects.get(patient_id=patient_id)
+    # return render(request,'appointment.html',{'patient':patient,'flag':flag})
+    ap_det=Visit.objects.get(appointment_id=ap_id)
+    pid=ap_det.patient_id
+    pd_det=PatientPrimaryData.objects.get(patient_id=pid)
+    context={
+            'ap_det':ap_det,
+            'pd_det':pd_det,
+    }
+    return render(request,'appointment.html',context)
