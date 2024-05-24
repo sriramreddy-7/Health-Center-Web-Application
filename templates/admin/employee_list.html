@@ -1,161 +1,222 @@
-{% extends 'admin_base.html' %}
-{% load static %}
-{% block body %}
+{% extends 'admin_base.html' %} {% load static %} {% block body %}
 
 <main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <h2 class="mb-2 page-title">Employee List</h2>
-                <div class="row my-4">
-                    <div class="col-md-12">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <table class="table datatables" id="dataTable-1">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>#</th>
-                                            <th>EMP ID</th>
-                                            <th>Name</th>
-                                            <th>Designation</th>
-                                            <th>Phone Number</th>
-                                            <th>Email</th>
-                                            <th>DOB</th>
-                                            <th>Gender</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <h2 class="mb-2 page-title">Employee List</h2>
+        <div class="row my-4">
+          <div class="col-md-12">
+            <div class="card shadow">
+              <div class="card-body">
+                <table class="table datatables" id="dataTable-1">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>#</th>
+                      <th>EMP ID</th>
+                      <th>Name</th>
+                      <th>Designation</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>DOB</th>
+                      <th>Gender</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
 
-                                    <tbody>
-                                        {% for employee in employees %}
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input">
-                                                        <label class="custom-control-label"></label>
-                                                    </div>
-                                                </td>
-                                                <td>{{ forloop.counter }}</td>
-                                                <td>{{ employee.emp_id }}</td>
-                                                <td>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
-                                                <td>{{ employee.emp_type }}</td>
-                                                <td>{{ employee.emp_phone }}</td>
-                                                <td>{{ employee.user.email }}</td>
-                                                <td>{{ employee.emp_dob }}</td>
-                                                <td>{{ employee.emp_gender }}</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editEmployeeModal" data-id="{{ employee.id }}" data-emp_id="{{ employee.emp_id }}" data-first_name="{{ employee.user.first_name }}" data-last_name="{{ employee.user.last_name }}" data-emp_type="{{ employee.emp_type }}" data-emp_phone="{{ employee.emp_phone }}" data-email="{{ employee.user.email }}" data-emp_dob="{{ employee.emp_dob }}" data-emp_gender="{{ employee.emp_gender }}">Edit</button>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
+                  <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                      <td>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" />
+                          <label class="custom-control-label"></label>
                         </div>
-                    </div>
-                </div>
+                      </td>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ employee.emp_id }}</td>
+                      <td>
+                        {{ employee.user.first_name }} {{
+                        employee.user.last_name }}
+                      </td>
+                      <td>{{ employee.emp_type }}</td>
+                      <td>{{ employee.emp_phone }}</td>
+                      <td>{{ employee.user.email }}</td>
+                      <td>{{ employee.emp_dob }}</td>
+                      <td>{{ employee.emp_gender }}</td>
+                      <td>
+                       <button
+  class="btn btn-primary btn-sm"
+  data-toggle="modal"
+  data-target="#editEmployeeModal"
+  data-id="{{ employee.id }}"
+  data-emp_id="{{ employee.emp_id }}"
+  data-first_name="{{ employee.user.first_name }}"
+  data-last_name="{{ employee.user.last_name }}"
+  data-emp_type="{{ employee.emp_type }}"
+  data-emp_phone="{{ employee.emp_phone }}"
+  data-email="{{ employee.user.email }}"
+  data-emp_dob="{{ employee.emp_dob }}"
+  data-emp_gender="{{ employee.emp_gender }}"
+>
+  <i class="fe fe-edit" style="font-size: 24px;"></i>
+  
+</button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </main>
 
 <!-- Edit Employee Modal -->
-<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form method="post" id="editEmployeeForm">
-            {% csrf_token %}
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="employee_id" id="editEmployeeId">
-                    <div class="form-group">
-                        <label for="editFirstName">First Name</label>
-                        <input type="text" class="form-control" id="editFirstName" name="first_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="editLastName">Last Name</label>
-                        <input type="text" class="form-control" id="editLastName" name="last_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEmpType">Designation</label>
-                        <input type="text" class="form-control" id="editEmpType" name="emp_type">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEmpPhone">Phone Number</label>
-                        <input type="text" class="form-control" id="editEmpPhone" name="emp_phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEmail">Email</label>
-                        <input type="email" class="form-control" id="editEmail" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEmpDob">Date of Birth</label>
-                        <input type="date" class="form-control" id="editEmpDob" name="emp_dob">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEmpGender">Gender</label>
-                        <select class="form-control" id="editEmpGender" name="emp_gender">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </form>
-    </div>
+<div
+  class="modal fade"
+  id="editEmployeeModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="editEmployeeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <form method="post" id="editEmployeeForm">
+      {% csrf_token %}
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="employee_id" id="editEmployeeId" />
+          <div class="form-group">
+            <label for="editFirstName">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editFirstName"
+              name="first_name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="editLastName">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editLastName"
+              name="last_name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="editEmpType">Designation</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editEmpType"
+              name="emp_type"
+            />
+          </div>
+          <div class="form-group">
+            <label for="editEmpPhone">Phone Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editEmpPhone"
+              name="emp_phone"
+            />
+          </div>
+          <div class="form-group">
+            <label for="editEmail">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="editEmail"
+              name="email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="editEmpDob">Date of Birth</label>
+            <input
+              type="date"
+              class="form-control"
+              id="editEmpDob"
+              name="emp_dob"
+            />
+          </div>
+          <div class="form-group">
+            <label for="editEmpGender">Gender</label>
+            <select class="form-control" id="editEmpGender" name="emp_gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 {% endblock %}
 
 <script>
-    $('#editEmployeeModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var employeeId = button.data('id');
-        var empId = button.data('emp_id');
-        var firstName = button.data('first_name');
-        var lastName = button.data('last_name');
-        var empType = button.data('emp_type');
-        var empPhone = button.data('emp_phone');
-        var email = button.data('email');
-        var empDob = button.data('emp_dob');
-        var empGender = button.data('emp_gender');
+  $("#editEmployeeModal").on("show.bs.modal", function (event) {
+    var button = $(event.relatedTarget);
+    var employeeId = button.data("id");
+    var empId = button.data("emp_id");
+    var firstName = button.data("first_name");
+    var lastName = button.data("last_name");
+    var empType = button.data("emp_type");
+    var empPhone = button.data("emp_phone");
+    var email = button.data("email");
+    var empDob = button.data("emp_dob");
+    var empGender = button.data("emp_gender");
 
-        var modal = $(this);
-        modal.find('#editEmployeeId').val(employeeId);
-        modal.find('#editFirstName').val(firstName);
-        modal.find('#editLastName').val(lastName);
-        modal.find('#editEmpType').val(empType);
-        modal.find('#editEmpPhone').val(empPhone);
-        modal.find('#editEmail').val(email);
-        modal.find('#editEmpDob').val(empDob);
-        modal.find('#editEmpGender').val(empGender);
+    var modal = $(this);
+    modal.find("#editEmployeeId").val(employeeId);
+    modal.find("#editFirstName").val(firstName);
+    modal.find("#editLastName").val(lastName);
+    modal.find("#editEmpType").val(empType);
+    modal.find("#editEmpPhone").val(empPhone);
+    modal.find("#editEmail").val(email);
+    modal.find("#editEmpDob").val(empDob);
+    modal.find("#editEmpGender").val(empGender);
+  });
+
+  $("#editEmployeeForm").on("submit", function (event) {
+    event.preventDefault();
+
+    var formData = $(this).serialize();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'hospital_admin:edit_employee' %}",
+      data: formData,
+      success: function (response) {
+        location.reload();
+      },
+      error: function (response) {
+        alert("An error occurred while updating the employee details.");
+      },
     });
-
-    $('#editEmployeeForm').on('submit', function (event) {
-        event.preventDefault();
-
-        var formData = $(this).serialize();
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'hospital_admin:edit_employee' %}",
-            data: formData,
-            success: function (response) {
-                location.reload();
-            },
-            error: function (response) {
-                alert('An error occurred while updating the employee details.');
-            }
-        });
-    });
+  });
 </script>
