@@ -412,3 +412,12 @@ class MedicalTestResult(models.Model):
     def get_report_upload_path(instance, filename):
         new_filename = f"{instance.appointment_id}.pdf"
         return f"reports/{new_filename}"  
+    
+    
+    
+class TestForm(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    

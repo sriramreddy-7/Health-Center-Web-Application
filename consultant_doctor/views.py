@@ -45,28 +45,6 @@ def consultantDoctor_appointmentList(request):
 
 
 def consultantDoctor_patientDiagonise(request,appointment_id):
-    '''try:
-        ad = Visit.objects.get(appointment_id=appointment_id)
-        pid = ad.patient_id
-        pd = PatientPrimaryData.objects.get(patient_id=pid)
-        phr = JDD.objects.get(appointment_id=appointment_id)
-        rep = get_object_or_404(MedicalTestResult, appointment_id=appointment_id)
-        context = {
-            'pd': pd,
-            'ad': ad,
-            'phr': phr,
-            'rep': rep,
-        }
-        return render(request, 'consultantDoctor_patientDiagonise.html', context)
-    except MedicalTestResult.DoesNotExist:
-        rep = None
-        context = {
-            'pd': pd,
-            'ad': ad,
-            'phr': phr,
-            'rep': rep,
-        }
-        return render(request, 'consultantDoctor_patientDiagonise.html', context)'''
     try:
         
         ad = get_object_or_404(Visit, appointment_id=appointment_id)
@@ -157,8 +135,8 @@ def consultantDoctor_precribeTest(request,appointment_id):
             test12=angiography, 
         )
         test.save()
-        return HttpResponse('<h1 style="color:green;">The Test Precribtion is Submitted to the Lab Incharge </h1>')
-        
+        # return HttpResponse('<h1 style="color:green;">The Test Precribtion is Submitted to the Lab Incharge </h1>')
+        return redirect('consultant_doctor:consultantDoctor_appointmentList')
     ad=Visit.objects.get(appointment_id=appointment_id)
     pid=ad.patient_id
     pd=PatientPrimaryData.objects.get(patient_id=pid)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from patient.models import PatientPrimaryData,FT,RP,PHR,Visit,JDD,Test,MedicalTestResult
+from patient.models import PatientPrimaryData,FT,RP,PHR,Visit,JDD,Test,MedicalTestResult,TestForm
 # Register your models here.
 admin.site.register(PatientPrimaryData)
 # admin.site.register(PatientCount)
@@ -11,3 +11,4 @@ admin.site.register(PHR)
 admin.site.register(JDD)
 admin.site.register(Test)
 admin.site.register(MedicalTestResult)
+admin.site.register(TestForm)

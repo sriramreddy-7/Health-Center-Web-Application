@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry
 from hospital_admin.models import Employee
-from patient.models import Visit ,PatientPrimaryData
+from patient.models import Visit ,PatientPrimaryData,TestForm
 from django.utils import timezone
 from django.db.models import Sum
 
@@ -128,6 +128,10 @@ def employee_list(request):
     return render(request, 'admin/employee_list.html', {'employees': employees})
 
 
+def employee_profiles(request):
+    employees = Employee.objects.all()
+    return render(request, 'admin/employee_profiles.html', {'employees': employees})
+
 def patient_appointments(request):
     visitor=Visit.objects.all()
     context = {
@@ -151,3 +155,15 @@ def appointment(request,ap_id):
             'pd_det':pd_det,
     }
     return render(request,'appointment.html',context)
+
+
+def admin_medical_test(request):
+    if request.method == 'POST':
+        test_name = request.POST.get('test_name')
+        t=TestForm.objects.create(name=test_name)
+        t.save()
+        print(t)
+        return redirect('hospital_admin:admin_medical_test')
+    tests = TestForm.objects.all()
+    return render(request, 'admin/admin_medical_test.html', {'tests': tests})
+    

@@ -170,6 +170,11 @@
                   <a
                     class="nav-link pl-lg-2"
                     href="{% url 'hospital_admin:employee_list' %}"
+                    ><span class="ml-1">Employee List</span></a
+                  >
+                   <a
+                    class="nav-link pl-lg-2"
+                    href="{% url 'hospital_admin:employee_profiles' %}"
                     ><span class="ml-1">Employee Profiles</span></a
                   >
                   <a class="nav-link pl-lg-2" href=""
@@ -192,6 +197,27 @@
               <!--    <span class="badge badge-pill badge-primary">New</span>-->
               <!--  </a>-->
               <!--</li>-->
+                <li class="nav-item dropdown">
+                <a
+                  href="#"
+                  id="formsDropdown"
+                  class="dropdown-toggle nav-link"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span class="ml-lg-2">Medical Test</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="formsDropdown">
+                  <a class="nav-link pl-lg-2" href="{% url 'hospital_admin:admin_medical_test' %}"
+                    ><span class="ml-1">Add Test</span></a
+                  >
+                  <!-- <a class="nav-link pl-lg-2" href="#"
+                    ><span class="ml-1">Pharmaceuticals Inventory</span></a
+                  > -->
+                </div>
+              </li>
               <li class="nav-item dropdown">
                 <a
                   href="#"
