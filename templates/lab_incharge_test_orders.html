@@ -2,47 +2,49 @@
 {% load static %}
 {% block body %}
 <div class="col-lg-12 stretch-card">
-<div class="card">
-              <div class="card-body">
-                <h4 class="card-title">CCHC Appointment List  </h4>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="table-responsive">
-                      <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th>Appointment ID</th>
-                            <th>Patient ID</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                               {% for x in patient %}
-                          <tr>
-                            <td>{{x.appointment_id}}</td>
-                            <td>{{x.patient_id}}</td>
-                            <td>{{x.test1}}</td>
-                            <td>{{x.test2}}</td>
-                            <td>{{x.test3}}</td>
-                            <td>{{x.test4}}</td>                           
-                            <td>{{x.test5}}</td>
-                            <td>{{x.test6}}</td>
-                            <td>{{x.test7}}</td>
-                            <td>{{x.test8}}</td>
-                            <td>{{x.test9}}</td>
-                            <td>{{x.test10}}</td>
-                            <td>{{x.test11}}</td>
-                            <td>{{x.test12}}</td>
-                            <td style="text-align:center;"><a href="/lab_incharge/trail/{{ x.appointment_id }}/" type="button" class="btn btn-primary btn-icon-text btn-sm"> View <i class="mdi mdi-file-check btn-icon-append"></i>
-                          </a> &nbsp;|&nbsp; <a type="button" class="btn btn-warning btn-icon-text btn-sm"> Upload <i class="mdi mdi-file-check btn-icon-append"></i>
-                          </a></td>
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">CCHC Appointment List</h4>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Appointment ID</th>
+                  <th>Patient ID</th>
+                  <th>Tests</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for x in patients %}
+                <tr>
+                  <td>{{ x.appointment_id }}</td>
+                  <td>{{ x.patient_id }}</td>
+                  <td>
+                    <table  class="table table-bordered">
+                      <th>S.NO</th>
+                      <th>Test Name</th>
+                      {% for test in x.tests.all %}
+
+                        <tr>
+                          <td>{{forloop.counter}}</td><td>{{ test.name }}</td></tr>
+                      {% endfor %}
+                    </table>
+                  </td>
+                  <td style="text-align:center;">
+                    <a href="/lab_incharge/trail/{{ x.appointment_id }}/" type="button" class="btn btn-primary btn-icon-text btn-sm"> View <i class="mdi mdi-file-check btn-icon-append"></i></a> &nbsp;|&nbsp; 
+                    <a type="button" class="btn btn-warning btn-icon-text btn-sm"> Upload <i class="mdi mdi-file-check btn-icon-append"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

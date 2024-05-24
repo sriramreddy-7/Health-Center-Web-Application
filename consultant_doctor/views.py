@@ -13,7 +13,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult,PatientTest, TestForm
 
 
 def consultantDoctor_dashboard(request):
@@ -51,7 +51,7 @@ def consultantDoctor_patientDiagonise(request,appointment_id):
         pid = ad.patient_id
         pd = get_object_or_404(PatientPrimaryData, patient_id=pid)
         phr = get_object_or_404(JDD, appointment_id=appointment_id)
-        
+        tests = TestForm.objects.all()
         try:
             rep = MedicalTestResult.objects.get(appointment_id=appointment_id)
         except MedicalTestResult.DoesNotExist:
@@ -62,6 +62,7 @@ def consultantDoctor_patientDiagonise(request,appointment_id):
             'ad': ad,
             'phr': phr,
             'rep': rep,
+            'tests':tests, 
         }
         return render(request, 'consultantDoctor_patientDiagonise.html', context)
     except Visit.DoesNotExist:
@@ -85,66 +86,35 @@ def consultantDoctor_patientDiagonise_View_Edit(request,patient_id):
     return render(request,'consultantDoctor_patientDiagonise_View_Edit.html',context)
 
 
-def consultantDoctor_precribeTest(request,appointment_id):
+def consultantDoctor_precribeTest(request, appointment_id):
     if request.method == 'POST':
-        appointment_id=request.POST.get('appointment_id')
-        patient_id=request.POST.get('patient_id')
-        x_ray = request.POST.get('x_ray')
-        echocardiogram = request.POST.get('echocardiogram')
-        electrocardiogram=request.POST.get('electrocardiogram')
-        mri = request.POST.get('mri')
-        stress_test=request.POST.get('stress_test')
-        est=request.POST.get('est')
-        blood_test=request.POST.get('blood_test')
-        urine_test=request.POST.get('urine_test')
-        ct_scan=request.POST.get('ct_scan')
-        thread_mill_test = request.POST.get('thread_mill_test')
-        echo=request.POST.get('echo')
-        angiography=request.POST.get('angiography')
-        print('Appointment_Id',appointment_id)
-        print('Patient_Id',patient_id)
-        print('X_Ray',x_ray)
-        print('echocardiogram',echocardiogram)
-        print('electrocardiogram',electrocardiogram)
-        print('MRI Scan', mri)
-        print('stress_test',stress_test)
-        print('Blood Test',blood_test)
-        print('Urine Test',urine_test)
-        print('est',est)
-        print('ct_scan',ct_scan)
-        print('ECG',est)
-        print('echo',echo)
-        print('angiography',angiography)
-        print('thread_mill_test ',thread_mill_test )
-        visit = Visit.objects.get(appointment_id=appointment_id)
-        patient_id = PatientPrimaryData.objects.get(id=visit.patient_id_id)
-        test=Test.objects.create(
-            appointment_id=visit,
-            patient_id=patient_id,
-            test1=x_ray,
-            test2=echocardiogram,
-            test3=electrocardiogram,
-            test4=mri,
-            test5=stress_test,
-            test6=est,
-            test7=blood_test,
-            test8=urine_test,
-            test9=ct_scan,
-            test10=thread_mill_test,
-            test11=echo,
-            test12=angiography, 
+        appointment = Visit.objects.get(appointment_id=appointment_id)
+        patient = PatientPrimaryData.objects.get(id=appointment.patient_id_id)
+
+        selected_tests = request.POST.getlist('test_ids')
+
+        patient_test = PatientTest.objects.create(
+            appointment_id=appointment,
+            patient_id=patient,
         )
-        test.save()
-        # return HttpResponse('<h1 style="color:green;">The Test Precribtion is Submitted to the Lab Incharge </h1>')
+
+        for test_id in selected_tests:
+            test = TestForm.objects.get(id=test_id)
+            patient_test.tests.add(test)
+
+        patient_test.save()
+
         return redirect('consultant_doctor:consultantDoctor_appointmentList')
-    ad=Visit.objects.get(appointment_id=appointment_id)
-    pid=ad.patient_id
-    pd=PatientPrimaryData.objects.get(patient_id=pid)
-    context={
-        'ad':ad,
-        'pd':pd,
+
+    ad = Visit.objects.get(appointment_id=appointment_id)
+    pd = PatientPrimaryData.objects.get(patient_id=ad.patient_id)
+    tests = TestForm.objects.all()
+    context = {
+        'ad': ad,
+        'pd': pd,
+        'tests': tests,
     }
-    return render(request,'consultantDoctor_precribeTest.html',context)
+    return render(request, 'consultantDoctor_precribeTest.html', context)
 
 
 def consultantDoctor_prescription(request):

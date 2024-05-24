@@ -421,3 +421,12 @@ class TestForm(models.Model):
     def __str__(self):
         return self.name
     
+    
+class PatientTest(models.Model):
+    appointment_id = models.OneToOneField('Visit', on_delete=models.CASCADE, primary_key=True)
+    patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
+    tests = models.ManyToManyField(TestForm)
+    date_prescribed = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.patient_id} - {self.appointment_id}"

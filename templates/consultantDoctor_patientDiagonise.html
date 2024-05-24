@@ -9,7 +9,7 @@
 <div class="col-md-12">
   <div class="card shadow mb-4">
     <div class="card-header">
-      <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagonise Form {{ad.appointment_id}}</strong>
+      <strong class="card-title">CCHC In Patient {{ pd.patient_id }} Diagonise Form {{ ad.appointment_id }}</strong>
     </div>
     <div class="card-body">
       <form action="#" method="post">
@@ -17,29 +17,29 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="patient_token">Patient Token Number</label>
-            <input type="text" class="form-control" id="patient_token" value="{{ad.patient_token}}" readonly />
+            <input type="text" class="form-control" id="patient_token" value="{{ ad.patient_token }}" readonly />
           </div>
           <div class="form-group col-md-4">
             <label for="patient_id">Patient ID</label>
-            <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{pd.patient_id}}" readonly />
+            <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{ pd.patient_id }}" readonly />
           </div>
           <div class="form-group col-md-4">
             <label for="patient_name">Patient Name</label>
-            <input type="text" class="form-control" id="patient_name" value="{{pd.patient_name}}" readonly />
+            <input type="text" class="form-control" id="patient_name" value="{{ pd.patient_name }}" readonly />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="gender">Gender</label>
-            <input type="text" class="form-control" id="gender" value="{{pd.patient_gender}}" readonly />
+            <input type="text" class="form-control" id="gender" value="{{ pd.patient_gender }}" readonly />
           </div>
           <div class="form-group col-md-4">
             <label for="dob">Date of Birth</label>
-            <input type="text" class="form-control" id="dob" value="{{pd.patient_dob}}" readonly />
+            <input type="text" class="form-control" id="dob" value="{{ pd.patient_dob }}" readonly />
           </div>
           <div class="form-group col-md-4">
             <label for="age">Age</label>
-            <input type="text" class="form-control" id="age" value="{{pd.patient_age}}" readonly />
+            <input type="text" class="form-control" id="age" value="{{ pd.patient_age }}" readonly />
           </div>
         </div>
         <hr />
@@ -163,12 +163,11 @@
   </div>
 </div>
 
-<!-- Modal HTML -->
 <div id="prescribeTestModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="prescribeTestModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="prescribeTestModalLabel"> Patient {{pd.patient_id}} Prescribe Test Form {{ad.appointment_id}}</h5>
+        <h5 class="modal-title" id="prescribeTestModalLabel"> Patient {{ pd.patient_id }} Prescribe Test Form {{ ad.appointment_id }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -176,125 +175,24 @@
       <div class="modal-body">
         <form id="prescribeTestForm" action="/consultant_doctor/consultantDoctor_precribeTest/{{ ad.appointment_id }}/" method="post">
           {% csrf_token %}
+          <input type="hidden" class="form-control" id="patient_id" value="{{ pd.patient_id }}" name="patient_id" readonly />
+          <input type="hidden" class="form-control" id="appointment_id" name="appointment_id" value="{{ ad.appointment_id }}" readonly />
+          
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <input type="hidden" class="form-control" id="patient_id" value="{{pd.patient_id}}" name="patient_id" readonly />
-            </div>
-            <div class="form-group col-md-6">
-              <input type="hidden" class="form-control" id="appointment_id" name="appointment_id" value="{{ad.appointment_id}}" readonly />
-            </div>
-          </div>
-          <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="patient_token">Patient Token Number</label>
-            <input type="text" class="form-control" id="patient_token" value="{{ad.patient_token}}" readonly />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="patient_id">Patient ID</label>
-            <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{pd.patient_id}}" readonly />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="patient_name">Patient Name</label>
-            <input type="text" class="form-control" id="patient_name" value="{{pd.patient_name}}" readonly />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="gender">Gender</label>
-            <input type="text" class="form-control" id="gender" value="{{pd.patient_gender}}" readonly />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="dob">Date of Birth</label>
-            <input type="text" class="form-control" id="dob" value="{{pd.patient_dob}}" readonly />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="age">Age</label>
-            <input type="text" class="form-control" id="age" value="{{pd.patient_age}}" readonly />
-          </div>
-        </div>
-        <hr />
-          <div class="form-row">
+            {% for test in tests %}
             <div class="form-group col-md-2">
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="x_ray" name="x_ray" value="Chest X Ray">
-                <label class="custom-control-label" for="x_ray">Chest X Ray</label>
+                <input type="checkbox" class="custom-control-input" id="test{{ test.id }}" name="test_ids" value="{{ test.id }}">
+                <label class="custom-control-label" for="test{{ test.id }}">{{ test.name }}</label>
               </div>
             </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Echocardiogram" name="echocardiogram" value="Echocardiogram">
-                <label class="custom-control-label" for="Echocardiogram">Echocardiogram (heart ultrasound)</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Electrocardiogram" name="electrocardiogram" value="Electrocardiogram">
-                <label class="custom-control-label" for="Electrocardiogram">Electrocardiogram (ECG)</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="MRI" name="mri" value="MRI">
-                <label class="custom-control-label" for="MRI">MRI</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Stress_Tests" name="stress_test" value="Stress Tests">
-                <label class="custom-control-label" for="Stress_Tests">Stress Tests</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Exercise" name="est" value="Exercise Stress Test">
-                <label class="custom-control-label" for="Exercise">Exercise Stress Test</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Blood_Test" name="blood_test" value="Blood Test">
-                <label class="custom-control-label" for="Blood_Test">Blood Test</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Urine_Test" name="urine_test" value="Urine Test">
-                <label class="custom-control-label" for="Urine_Test">Urine Test</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="CT_Scan" name="ct_scan" value="CT Scan">
-                <label class="custom-control-label" for="CT_Scan">CT Scan</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Thread_Mill_Test" name="thread_mill_test" value="Thread Mill Test">
-                <label class="custom-control-label" for="Thread_Mill_Test">Thread Mill Test</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Stress" name="echo" value="Stress Echocardiogram">
-                <label class="custom-control-label" for="Stress">Stress Echocardiogram (stress echo)</label>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="Angiography" name="angiography" value="Coronary Angiography">
-                <label class="custom-control-label" for="Angiography">Coronary Angiography</label>
-              </div>
-            </div>
+            {% endfor %}
           </div>
           <input type="submit" class="btn btn-success" value="Submit" form="prescribeTestForm" />
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- <button type="submit" form="prescribeTestForm" class="btn btn-success">Save</button> -->
       </div>
     </div>
   </div>

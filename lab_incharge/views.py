@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,RP,Test,Visit,MedicalTestResult
+from patient.models import PatientPrimaryData,FT,RP,Test,Visit,MedicalTestResult,TestForm,PatientTest
 from django.db.models import Q
 # Create your views here.
 
@@ -62,7 +62,7 @@ def lab_Incharge_patient_reports_gallery(request):
     return render(request,'lab_Incharge_patient_reports_gallery.html',{'patient':patient})
 
 
-def lab_incharge_test_orders(request):
+"""def lab_incharge_test_orders(request):
     patient=Test.objects.exclude(
     Q(test1__isnull=True) &
     Q(test2__isnull=True) &
@@ -83,7 +83,13 @@ def lab_incharge_test_orders(request):
     Q(test17__isnull=True) &
     Q(test18__isnull=True)
     )
-    return render(request,'lab_incharge_test_orders.html',{'patient':patient})
+    return render(request,'lab_incharge_test_orders.html',{'patient':patient})"""
+
+
+def lab_incharge_test_orders(request):
+    patients = PatientTest.objects.exclude(tests__isnull=True)
+    return render(request, 'lab_incharge_test_orders.html', {'patients': patients})
+
 
 from django.core.files.base import ContentFile
 
