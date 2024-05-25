@@ -220,7 +220,7 @@ def prescribe_medicine(request, appointment_id):
             rep = None
         
         test_reports = TestReport.objects.filter(patient_test__appointment_id=appointment_id)
-        med=Medicine.objects.all()
+        med = Medicine.objects.all()
         context = {
             'pd': pd,
             'ad': ad,
@@ -228,12 +228,9 @@ def prescribe_medicine(request, appointment_id):
             'rep': rep,
             'tests': tests,
             'test_reports': test_reports,
-            'med':med,
+            'med': med,
         }
-        print(ad,pd,pid,phr,tests,rep,test_reports)
-        print("----")
-        print(rep)
-        print(test_reports)
+        
         if request.method == 'POST':
             prescription = PatientPrescription.objects.create(
                 appointment_id=ad,
@@ -248,29 +245,32 @@ def prescribe_medicine(request, appointment_id):
             )
         
             prescribed_medicines = []
-            for key, value in request.POST.items():
-                if key.startswith('tablet_name'):
-                    tablet_name = value
-                    dosage = request.POST.get('dosage[' + key.split('[')[1], '')
-                    feeding_rule = request.POST.get('feeding_rule[' + key.split('[')[1], '')
-                    feeding_days = request.POST.get('feeding_days[' + key.split('[')[1], '')
-                    prescribed_medicines.append(PrescribedMedicine(
-                        prescription=prescription,
-                        medicine=Medicine.objects.get(name=tablet_name),
-                        dosage=dosage,
-                        feeding_rule=feeding_rule,
-                        feeding_time=request.POST.get('feeding_time[' + key.split('[')[1], ''),
-                        feeding_days=feeding_days
-                    ))
+            for i in range(len(request.POST.getlist('tablet_name[]'))):
+                tablet_name = request.POST.getlist('tablet_name[]')[i]
+                dosage = request.POST.getlist('dosage[]')[i]
+                feeding_rule = request.POST.getlist('feeding_rule[]')[i]
+                feeding_days = request.POST.getlist('feeding_days[]')[i]
+                feeding_time = request.POST.getlist('feeding_time[]')[i]
+                
+                # Get the first Medicine object with the given name
+                medicine = Medicine.objects.filter(name=tablet_name).first()
+                
+                prescribed_medicines.append(PrescribedMedicine(
+                    prescription=prescription,
+                    medicine=medicine,
+                    dosage=dosage,
+                    feeding_rule=feeding_rule,
+                    feeding_time=feeding_time,
+                    feeding_days=feeding_days
+                ))
         
             PrescribedMedicine.objects.bulk_create(prescribed_medicines)
         
-            # Assuming you have a prescription template named 'prescription.html'
-            context = {
+            context.update({
                 'prescription': prescription,
                 'prescribed_medicines': prescribed_medicines,
-            }
-            print(request.POST)
+            })
+            
             return render(request, 'prescription.html', context)
     
         return render(request, 'consultant_doctor/consultantDoctor_prescribe_medicine.html', context)
@@ -280,4 +280,20 @@ def prescribe_medicine(request, appointment_id):
     except PatientPrimaryData.DoesNotExist:
         return HttpResponse("Patient primary data not found.")
     except JDD.DoesNotExist:
-        return HttpResponse("JDD data not found.")
+        return HttpResponse("JDD data not found.")  
+    
+    
+def view_prescription(request, appointment_id):
+    try:
+        prescription = get_object_or_404(PatientPrescription, appointment_id=appointment_id)
+        prescribed_medicines = prescription.prescribedmedicine_set.all()
+    except PatientPrescription.DoesNotExist:
+        prescription = None
+        prescribed_medicines = None
+    
+    context = {
+        'prescription': prescription,
+        'prescribed_medicines': prescribed_medicines
+    }
+    return render(request, 'prescription.html', context)
+    

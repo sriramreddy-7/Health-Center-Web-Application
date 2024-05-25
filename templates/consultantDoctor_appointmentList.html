@@ -28,7 +28,9 @@
                             <td>{{ x.appointment_id }}</td>
                             <td>{{ x.visit_date}}</td>
                             <td><a href="/consultant_doctor/consultantDoctor_patientDiagonise/{{ x.appointment_id }}/" class="btn btn-primary "><span class="fe fe-20 fe-edit"></span>&nbsp;Diagonise</a>
-                            &nbsp; | &nbsp; <a href="/consultant_doctor/consultantDoctor_patientDiagonise_View_Edit/{{ x.appointment_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit</a></td>
+                            &nbsp; | &nbsp; <a href="/consultant_doctor/consultantDoctor_patientDiagonise_View_Edit/{{ x.appointment_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit</a> &nbsp; | &nbsp;
+                            <a href="/consultant_doctor/view_prescription/{{ x.appointment_id }}/" class="btn btn-success"> <span class="fe fe-file-text"></span>&nbsp;Prescription</a>
+                          </td>
                           </tr>
                          {% endfor%}
                         </tbody>

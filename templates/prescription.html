@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,7 +9,6 @@
   <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
   <style>
     /* Add your custom CSS styles here */
-    /* Example styles */
     body {
       background-color: #f8f9fa;
     }
@@ -17,57 +17,128 @@
     }
     .table-bordered th,
     .table-bordered td {
-      border: 1px solid #dee2e6;
+      border: 0.5px solid #dee2e6; /* Thinner borders */
       padding: 0.75rem;
       vertical-align: top;
     }
     .table-bordered thead th {
       border-top: none;
-      border-bottom: 2px solid #dee2e6;
+      border-bottom: 1px solid #dee2e6; /* Thinner bottom border */
     }
     .table-bordered tbody + tbody {
-      border-top: 2px solid #dee2e6;
+      border-top: 1px solid #dee2e6; /* Thinner top border */
+    }
+    /* Print styles */
+    @media print {
+      .card {
+        box-shadow: none !important;
+      }
+      #printButton {
+        display: none;
+      }
     }
   </style>
 </head>
 <body class="p-3 m-0 border-0 bd-example m-0 border-0">
 <main role="main" class="main-content">
   <div class="container-fluid">
+    <!-- Header with logo and address -->
+    <div class="container-fluid d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex align-items-center">
+        <img src="{% static 'assets/icons/hb.png' %}" class="me-2" style="height: 150px; width: 150px; object-fit: contain" />
+      </div>
+      <div>
+        <h3 class="mb-2" style="color: red">Crazy Coders Health Center</h3>
+        <p class="mb-1">Mulugu Rd, Vidya Nagar, Warangal</p>
+        <p class="mb-1">Telangana 506007, India</p>
+        <p class="mb-1">info@cchc.com</p>
+        <p class="mb-1"><i class="uil uil-phone me-1"></i> +91 9876543210</p>
+      </div>
+    </div>
+    <hr />
+    <!-- End of header -->
+    
     <div class="row justify-content-center">
       <div class="col-12 col-lg-10 col-xl-8">
         <!-- Prescription content here -->
         <div class="card shadow">
           <div class="card-body p-5">
+            
+            <div class="text-end mb-4">
+              <button id="printButton" class="btn btn-primary" onclick="window.print()">Print</button>
+            </div>
             <!-- Prescription details -->
-            <h3 class="card-title text-center text-danger mb-4">CCHC In Patient Medical Prescription</h3>
-            <div class="mb-4">
-              <h5>Chief Complaints:</h5>
-              <p>{{ prescription.chief_complaints }}</p>
-            </div>
-            <div class="mb-4">
-              <h5>Clinical Findings:</h5>
-              <p>{{ prescription.clinical_findings }}</p>
-            </div>
-            <div class="mb-4">
-              <h5>Investigations:</h5>
-              <p>{{ prescription.investigations }}</p>
-            </div>
-            <div class="mb-4">
-              <h5>Diagnosis:</h5>
-              <p>{{ prescription.diagnosis }}</p>
-            </div>
-            <div class="mb-4">
-              <h5>Procedures Conducted:</h5>
-              <p>{{ prescription.procedures_conducted }}</p>
-            </div>
-            <div class="mb-4">
-              <h5>Advice Given:</h5>
-              <p>{{ prescription.advice_given }}</p>
-            </div>
-            <div class="mb-4">
-              <h5>Next Visit:</h5>
-              <p>{{ prescription.next_visit }}</p>
-            </div>
+            <h3 class="card-title text-center text-danger mb-4"><u>CCHC In Patient Medical Prescription</u></h3>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td>Patient Name</td>
+                  <td>{{ prescription.patient_id.patient_name }}</td>
+                  <td>Date of Visit</td>
+                  <td>{{ prescription.appointment_id.today_date }}</td>
+                </tr>
+              </thead>
+              
+              <tbody>
+                <tr>
+                  <td>Patient ID</td>
+                  <td>{{ prescription.patient_id.patient_id }}</td>
+                  <td>Appointment ID | Token</td>
+                  <td>{{ prescription.appointment_id.appointment_id }} | {{ prescription.appointment_id.patient_token }}</td>
+                </tr>
+                <tr>
+                  <td>Patient Type</td>
+                  <td>{{ prescription.appointment_id.patient_type }}</td>
+                  <td>Doctor Name</td>
+                  <td>{{ prescription.appointment_id.doctor_name }}</td>
+                </tr>
+                <tr>
+                  <td>Age</td>
+                  <td>{{ prescription.patient_id.patient_age }}</td>
+                  <td>Gender</td>
+                  <td>{{ prescription.patient_id.patient_gender }}</td>
+                </tr>
+                <tr>
+                  <td>Date of Birth</td>
+                  <td>{{ prescription.patient_id.patient_dob }}</td>
+                  <td>Mobile Number</td>
+                  <td>{{ prescription.patient_id.mobile_number }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td><h6>Chief Complaints</h6></td>
+                  <td><p>{{ prescription.chief_complaints }}</p></td>
+                </tr>
+                <tr>
+                  <td><h6>Clinical Findings</h6></td>
+                  <td><p>{{ prescription.clinical_findings }}</p></td>
+                </tr>
+                <tr>
+                  <td><h6>Investigations</h6></td>
+                  <td><p>{{ prescription.investigations }}</p></td>
+                </tr>
+                <tr>
+                  <td><h6>Diagnosis</h6></td>
+                  <td><p>{{ prescription.diagnosis }}</p></td>
+                </tr>
+                <tr>
+                  <td><h6>Procedures Conducted</h6></td>
+                  <td><p>{{ prescription.procedures_conducted }}</p></td>
+                </tr>
+                <tr>
+                  <td><h6>Advice Given</h6></td>
+                  <td><p>{{ prescription.advice_given }}</p></td>
+                </tr>
+                <tr>
+                  <td><h6>Next Visit</h6></td>
+                  <td><p>{{ prescription.next_visit }}</p></td>
+                </tr>
+              </tbody>
+            </table>
             <!-- Prescription table -->
             <h5 class="card-title text-center text-danger mb-4">Prescribed Medicines</h5>
             <table class="table table-bordered">
@@ -77,6 +148,7 @@
                   <th>Medicine Name</th>
                   <th class="text-right">Dosage</th>
                   <th class="text-right">Feeding Rule</th>
+                  <th class="text-right">Feeding Time</th>
                   <th class="text-right">Feeding Days</th>
                 </tr>
               </thead>
@@ -85,17 +157,18 @@
                 <tr>
                   <td>{{ forloop.counter }}</td>
                   <td>{{ medicine.medicine.name }}</td>
-                  <td class="text-right">{{ medicine.dosage }}</td>
+                  <td class="text-right">{{ medicine.dosage }} mg</td>
                   <td class="text-right">{{ medicine.feeding_rule }}</td>
+                  <td class="text-right">{{ medicine.feeding_time }}</td>
                   <td class="text-right">{{ medicine.feeding_days }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
-            <!-- End of Prescription table -->
+            
           </div>
         </div>
-        <!-- End of Prescription content -->
+       
       </div>
     </div>
   </div>
