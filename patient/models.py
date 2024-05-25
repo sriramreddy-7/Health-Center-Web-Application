@@ -430,3 +430,14 @@ class PatientTest(models.Model):
 
     def __str__(self):
         return f"{self.patient_id} - {self.appointment_id}"
+    
+    
+
+class TestReport(models.Model):
+    patient_test = models.ForeignKey(PatientTest, on_delete=models.CASCADE, related_name='test_reports')
+    test = models.ForeignKey(TestForm, on_delete=models.CASCADE)
+    report = models.FileField(upload_to='test_reports/')
+    date_uploaded = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Report for {self.test.name} (Patient: {self.patient_test.patient_id})"
