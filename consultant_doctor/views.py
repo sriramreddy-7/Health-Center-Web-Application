@@ -13,7 +13,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult,PatientTest, TestForm,TestReport
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult,PatientTest, TestForm,TestReport,Medicine
 
 
 def consultantDoctor_dashboard(request):
@@ -58,7 +58,7 @@ def consultantDoctor_patientDiagonise(request, appointment_id):
             rep = None
         
         test_reports = TestReport.objects.filter(patient_test__appointment_id=appointment_id)
-
+        med=Medicine.objects.all()
         context = {
             'pd': pd,
             'ad': ad,
@@ -66,6 +66,7 @@ def consultantDoctor_patientDiagonise(request, appointment_id):
             'rep': rep,
             'tests': tests,
             'test_reports': test_reports,
+            'med':med,
         }
         print(ad,pd,pid,phr,tests,rep,test_reports)
         print("----")
@@ -178,6 +179,9 @@ def medicine(request):
             for i in range(len(tablet_names))
         ]
         return render(request,'prescription.html',{'medicine_details_list':medicine_details_list})
-
         
-    return render(request,'medicine.html')
+    med=Medicine.objects.all()
+    context={
+        'med':med,
+    }
+    return render(request,'medicine.html',context)

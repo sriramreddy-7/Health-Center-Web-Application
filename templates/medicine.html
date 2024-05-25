@@ -288,28 +288,9 @@
                   name="tablet_name[]"
                 >
                   <option value="">Select Tablet Name</option>
-                  <option value="Aspirin">Aspirin</option>
-                  <option value="Clopidogrel">Clopidogrel</option>
-                  <option value="Nitroglycerin">Nitroglycerin</option>
-                  <option value="Atenolol">Atenolol</option>
-                  <option value="Metoprolol">Metoprolol</option>
-                  <option value="Lisinopril">Lisinopril</option>
-                  <option value="Ramipril">Ramipril</option>
-                  <option value="Losartan">Losartan</option>
-                  <option value="Carvedilol">Carvedilol</option>
-                  <option value="Digoxin">Digoxin</option>
-                  <option value="Warfarin">Warfarin</option>
-                  <option value="Diltiazem">Diltiazem</option>
-                  <option value="Amiodarone">Amiodarone</option>
-                  <option value="Furosemide">Furosemide</option>
-                  <option value="Spironolactone">Spironolactone</option>
-                  <option value="Apixaban">Apixaban</option>
-                  <option value="Rivaroxaban">Rivaroxaban</option>
-                  <option value="Prasugrel">Prasugrel</option>
-                  <option value="Enoxaparin">Enoxaparin</option>
-                  <option value="Isosorbide mononitrate">
-                    Isosorbide mononitrate
-                  </option>
+                  {% for medicine in med %}
+                  <option value="{{medicine.name}}">{{medicine.name}}</option>
+                  {% endfor %}
                 </select>
                 <h5 for="">&nbsp;&nbsp;Medicine Name</h5>
               </div>

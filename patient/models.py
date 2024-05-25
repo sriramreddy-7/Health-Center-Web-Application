@@ -441,3 +441,17 @@ class TestReport(models.Model):
 
     def __str__(self):
         return f"Report for {self.test.name} (Patient: {self.patient_test.patient_id})"
+    
+    
+    
+class Medicine(models.Model):
+    name = models.CharField(max_length=255)
+    manufacturer = models.CharField(max_length=255, blank=True)
+    medicine_type = models.CharField(max_length=100, blank=True)
+    dosage_form = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+    side_effect = models.TextField(blank=True)
+    dosage_strength =models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.name

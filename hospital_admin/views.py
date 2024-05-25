@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry
 from hospital_admin.models import Employee
-from patient.models import Visit ,PatientPrimaryData,TestForm
+from patient.models import Visit ,PatientPrimaryData,TestForm,Medicine
 from django.utils import timezone
 from django.db.models import Sum
 
@@ -167,3 +167,28 @@ def admin_medical_test(request):
     tests = TestForm.objects.all()
     return render(request, 'admin/admin_medical_test.html', {'tests': tests})
     
+
+def admin_medicine_list(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        manufacturer = request.POST.get('manufacturer')
+        medicine_type = request.POST.get('medicine_type')
+        dosage_form = request.POST.get('dosage_form')
+        description = request.POST.get('description')
+        side_effect = request.POST.get('side_effect')
+        dosage_strength=request.POST.get('dosage_strength')
+
+        Medicine.objects.create(
+            name=name,
+            manufacturer=manufacturer,
+            medicine_type=medicine_type,
+            dosage_form=dosage_form,
+            description=description,
+            side_effect=side_effect,
+            dosage_strength=dosage_strength
+        )
+        
+        return redirect('hospital_admin:admin_medicine_list')
+
+    medicines = Medicine.objects.all()
+    return render(request, 'admin/admin_medicine_list.html', {'medicines': medicines})

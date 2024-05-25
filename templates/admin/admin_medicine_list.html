@@ -1,0 +1,110 @@
+{% extends 'admin_base.html' %}
+
+{% block body %}
+
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row justify-content-between">
+              <div class="col">
+                <h5 class="card-title">Medicine List</h5>
+              </div>
+              <div class="col-auto">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMedicineModal" >
+                  Add Medicine
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="medicineList">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Medicine Name</th>
+                      <th>Manufacturer</th>
+                      <th>Type</th>
+                      <th>Dosage Form</th>
+                      <th>Dosage Strength</th>
+                      <th>Description</th>
+                      <th>Side Effect</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for medicine in medicines %}
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ medicine.name }}</td>
+                      <td>{{ medicine.manufacturer }}</td>
+                      <td>{{ medicine.medicine_type }}</td>
+                      <td>{{ medicine.dosage_form }}</td>
+                      <td>{{ medicine.dosage_strength}}</td>
+                      <td>{{ medicine.description }}</td>
+                      <td>{{ medicine.side_effect }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Add Medicine Modal -->
+<div class="modal fade" id="addMedicineModal" tabindex="-1" role="dialog" aria-labelledby="addMedicineModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMedicineModalLabel">Add Medicine</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'hospital_admin:admin_medicine_list' %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="medicineName">Medicine Name:</label>
+            <input type="text" class="form-control" id="medicineName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="manufacturer">Manufacturer:</label>
+            <input type="text" class="form-control" id="manufacturer" name="manufacturer">
+          </div>
+          <div class="form-group">
+            <label for="medicineType">Type:</label>
+            <input type="text" class="form-control" id="medicineType" name="medicine_type">
+          </div>
+          <div class="form-group">
+            <label for="dosageForm">Dosage Form:</label>
+            <input type="text" class="form-control" id="dosageForm" name="dosage_form">
+          </div>
+          <div class="form-group">
+            <label for="dosage_strength">Dosage Strength MG:</label>
+            <input type="text" class="form-control" id="dosage_strength" name="dosage_strength">
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="sideEffect">Side Effect:</label>
+            <textarea class="form-control" id="sideEffect" name="side_effect"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

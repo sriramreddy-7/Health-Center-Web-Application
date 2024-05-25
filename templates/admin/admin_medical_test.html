@@ -1,8 +1,6 @@
 <!-- test_list.html -->
 
-{% extends 'admin_base.html' %}
-
-{% block body %}
+{% extends 'admin_base.html' %} {% block body %}
 
 <main role="main" class="main-content">
   <div class="container-fluid">
@@ -15,7 +13,12 @@
                 <h5 class="card-title">Test List</h5>
               </div>
               <div class="col-auto">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTestModal">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#addTestModal"
+                >
                   Add Test
                 </button>
               </div>
@@ -27,14 +30,14 @@
                 <table class="table">
                   <thead>
                     <tr>
-                        <th>Test ID</th>
+                      <th>S.NO</th>
                       <th>Test Name</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for test in tests %}
                     <tr>
-                        <td>{{test.id}}</td>
+                      <td>{{ forloop.counter }}</td>
                       <td>{{ test.name }}</td>
                     </tr>
                     {% endfor %}
@@ -50,21 +53,41 @@
 </main>
 
 <!-- Add Test Modal -->
-<div class="modal fade" id="addTestModal" tabindex="-1" role="dialog" aria-labelledby="addTestModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="addTestModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addTestModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addTestModalLabel">Add Test</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="{% url 'hospital_admin:admin_medical_test' %}" method="post">
+        <form
+          action="{% url 'hospital_admin:admin_medical_test' %}"
+          method="post"
+        >
           {% csrf_token %}
           <div class="form-group">
             <label for="testName">Test Name:</label>
-            <input type="text" class="form-control" id="testName" name="test_name">
+            <input
+              type="text"
+              class="form-control"
+              id="testName"
+              name="test_name"
+            />
           </div>
           <button type="submit" class="btn btn-primary">Add</button>
         </form>
