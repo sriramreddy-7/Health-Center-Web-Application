@@ -1,0 +1,112 @@
+{% extends 'lab_incharge_base.html' %}
+{% load static %}
+{% block body %}
+<div class="page-header">
+  <h3 class="page-title">CCHC</h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'lab_incharge:lab_incharge_patient_wise_report' %}">Patient Wise Report</a></li>
+      <li class="breadcrumb-item active" aria-current="page">
+       <a href="{% url 'lab_incharge:lab_incharge_dashboard' %}">Dashboard</a>
+      </li>
+    </ol>
+  </nav>
+</div>
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title" style="color: red">CCHC Patient Form</h4>
+      <p class="card-description">Personal Info</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Appointment ID</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" value="{{ visit.appointment_id }}" name="appointment_id" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Patient Token</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" value="{{ visit.patient_token }}" name="patient_token" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Patient ID</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" value="{{ patient.patient_id }}" name="patient_id" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-lg-3 col-form-label">Full Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" value="{{ patient.patient_name }}" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Gender</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" value="{{ patient.patient_gender }}" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Date of Birth</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <input type="text" class="form-control" value="{{ patient.patient_dob }}" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Age</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" value="{{ patient.patient_age }}" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Mobile Number</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" value="{{ patient.mobile_number }}" readonly />
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <h4 class="card-title" style="color: red">Upload Patient Report</h4>
+      <form action="{% url 'lab_incharge:lab_incharge_test_report_upload' visit.appointment_id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" class="form-control" id="patient_id" name="patient_id" value="{{ patient.patient_id }}" readonly />
+        <input type="hidden" class="form-control" id="appointment_id" name="appointment_id" value="{{ visit.appointment_id }}" readonly />
+        
+        {% for test in allocated_tests %}
+          <div class="form-group">
+            <label for="report_file_{{ test.id }}">Report File for {{ test.name }}:</label>
+            <input type="file" id="report_file_{{ test.id }}" name="report_file" class="form-control" multiple />
+            <input type="hidden" name="test_id" value="{{ test.id }}" />
+          </div>
+        {% endfor %}
+        
+        <input type="submit" value="Upload" class="btn btn-primary">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

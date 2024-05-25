@@ -1,6 +1,4 @@
-{% extends 'lab_incharge_base.html' %}
-{% load static %}
-{% block body %}
+{% extends 'lab_incharge_base.html' %} {% load static %} {% block body %}
 <style>
   .card {
     margin-bottom: 20px;
@@ -8,14 +6,16 @@
     border-radius: 0.25rem;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   }
-  .card-header, .card-footer {
+  .card-header,
+  .card-footer {
     background-color: #f8f9fa;
     border-bottom: 1px solid #dee2e6;
   }
   .table {
     margin-bottom: 0;
   }
-  .table th, .table td {
+  .table th,
+  .table td {
     white-space: nowrap;
   }
   .btn-icon-append {
@@ -36,11 +36,14 @@
   <div class="card">
     <div class="card-header">
       <div>
-        <strong>Appointment ID:</strong> {{ x.appointment_id }}<br>
+        <strong>Appointment ID:</strong> {{ x.appointment_id.appointment_id }}<br />
         <strong>Patient ID:</strong> {{ x.patient_id }}
       </div>
       <div class="btn-group">
-        <a href="/lab_incharge/trail/{{ x.appointment_id }}/" class="btn btn-primary btn-icon-text btn-sm">
+        <a
+          href="/lab_incharge/lab_incharge_test_report_upload/{{  x.appointment_id.appointment_id }}/"
+          class="btn btn-primary btn-icon-text btn-sm"
+        >
           View <i class="mdi mdi-eye btn-icon-append"></i>
         </a>
         &nbsp;|&nbsp;
@@ -70,7 +73,6 @@
         </table>
       </div>
     </div>
-    
   </div>
   {% endfor %}
 </div>

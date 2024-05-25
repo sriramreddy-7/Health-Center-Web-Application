@@ -17,6 +17,7 @@ urlpatterns = [
     path('lab_Incharge_patient_reports',views.lab_Incharge_patient_reports,name="lab_Incharge_patient_reports"),
     path('lab_Incharge_patient_reports_gallery',views.lab_Incharge_patient_reports_gallery,name="lab_Incharge_patient_reports_gallery"),
     path('lab_incharge_test_orders',views.lab_incharge_test_orders,name="lab_incharge_test_orders"),
+    path('lab_incharge_test_report_upload/<str:appointment_id>/',views.lab_incharge_test_report_upload,name="lab_incharge_test_report_upload"),
 ]
 
 if settings.DEBUG:

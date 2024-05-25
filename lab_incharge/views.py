@@ -1,4 +1,4 @@
-from django.shortcuts import render ,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate,logout,login
 # from django.contrib.auth.models import User
 from django.conf import settings
@@ -11,8 +11,9 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,RP,Test,Visit,MedicalTestResult,TestForm,PatientTest
+from patient.models import PatientPrimaryData,FT,RP,Test,Visit,MedicalTestResult, PatientTest, TestReport, TestForm
 from django.db.models import Q
+from django.core.files.base import ContentFile
 # Create your views here.
 
 def lab_incharge_dashboard(request):
@@ -152,3 +153,34 @@ def trail(request, appointment_id):
         }
         return render(request, 'trail.html', context)
        
+
+
+def lab_incharge_test_report_upload(request, appointment_id):
+    if request.method == 'POST':
+        appointment_id = request.POST.get('appointment_id')
+        visit = get_object_or_404(Visit, appointment_id=appointment_id)
+        patient_id = request.POST.get('patient_id')
+        patient = get_object_or_404(PatientPrimaryData, patient_id=patient_id)
+        patient_test = get_object_or_404(PatientTest, appointment_id=visit, patient_id=patient)
+        
+        report_files = request.FILES.getlist('report_file')
+        test_ids = request.POST.getlist('test_id')
+        
+        for file, test_id in zip(report_files, test_ids):
+            test = get_object_or_404(TestForm, id=test_id)
+            TestReport.objects.create(patient_test=patient_test, test=test, report=file)
+        
+        return HttpResponse("Data is submitted to the Consultant Doctor!")
+    
+    else:
+        visit = get_object_or_404(Visit, appointment_id=appointment_id)
+        patient = get_object_or_404(PatientPrimaryData, patient_id=visit.patient_id.patient_id)
+        patient_test = get_object_or_404(PatientTest, appointment_id=visit, patient_id=patient)
+        allocated_tests = patient_test.tests.all()
+        
+        context = {
+            'patient': patient,
+            'visit': visit,
+            'allocated_tests': allocated_tests,
+        }
+        return render(request, 'lab_incharge/lab_incharge_test_report_upload.html', context)
