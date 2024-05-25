@@ -93,10 +93,13 @@
           <button type="button" class="btn mb-2 btn-secondary" id="showButton" onclick="toggleForm()">
             Prescribe Medicine
           </button>
-          &nbsp; &nbsp;
-          <a href="{{ rep.report_file.url }}" type="button" class="btn mb-2 btn-success" target="_blank">
-            View Lab Report
+ &nbsp; &nbsp;
+          {% for test_report in test_reports %}
+          <a href="{{ test_report.report.url }}" type="button" class="btn mb-2 btn-info" target="_blank">
+            View {{ test_report.test }}  Report
           </a>
+           &nbsp; &nbsp;
+        {% endfor %}
           &nbsp; &nbsp;
           <a href="" type="button" class="btn mb-2 btn-danger">
             Previous Health History

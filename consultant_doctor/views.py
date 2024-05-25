@@ -13,7 +13,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult,PatientTest, TestForm
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult,PatientTest, TestForm,TestReport
 
 
 def consultantDoctor_dashboard(request):
@@ -44,9 +44,9 @@ def consultantDoctor_appointmentList(request):
     return render(request,'consultantDoctor_appointmentList.html',{'patient':patient})
 
 
-def consultantDoctor_patientDiagonise(request,appointment_id):
+
+def consultantDoctor_patientDiagonise(request, appointment_id):
     try:
-        
         ad = get_object_or_404(Visit, appointment_id=appointment_id)
         pid = ad.patient_id
         pd = get_object_or_404(PatientPrimaryData, patient_id=pid)
@@ -56,14 +56,21 @@ def consultantDoctor_patientDiagonise(request,appointment_id):
             rep = MedicalTestResult.objects.get(appointment_id=appointment_id)
         except MedicalTestResult.DoesNotExist:
             rep = None
+        
+        test_reports = TestReport.objects.filter(patient_test__appointment_id=appointment_id)
 
         context = {
             'pd': pd,
             'ad': ad,
             'phr': phr,
             'rep': rep,
-            'tests':tests, 
+            'tests': tests,
+            'test_reports': test_reports,
         }
+        print(ad,pd,pid,phr,tests,rep,test_reports)
+        print("----")
+        print(rep)
+        print(test_reports)
         return render(request, 'consultantDoctor_patientDiagonise.html', context)
     except Visit.DoesNotExist:
         return HttpResponse("Visit not found.")
@@ -71,6 +78,8 @@ def consultantDoctor_patientDiagonise(request,appointment_id):
         return HttpResponse("Patient primary data not found.")
     except JDD.DoesNotExist:
         return HttpResponse("JDD data not found.")
+
+
         # return HttpResponse('<h1 style="color:red;">Oops! This Patient is not yet compeleted the Initial Diagonisis At Junior Doctor</h1>')
 
 
