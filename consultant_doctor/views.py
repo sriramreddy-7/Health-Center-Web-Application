@@ -37,10 +37,17 @@ def logout_view(request):
 
 def consultantDoctor_patientList(request):
     patient=PatientPrimaryData.objects.all()
+    
     return render(request,'consultantDoctor_patientList.html',{'patient':patient})
 
 def consultantDoctor_appointmentList(request):
     patient=Visit.objects.all()
+    for p in patient:
+        try:
+            prescription = PatientPrescription.objects.get(appointment_id=p.appointment_id)
+            p.prescription_generated = True
+        except PatientPrescription.DoesNotExist:
+            p.prescription_generated = False
     return render(request,'consultantDoctor_appointmentList.html',{'patient':patient})
 
 
