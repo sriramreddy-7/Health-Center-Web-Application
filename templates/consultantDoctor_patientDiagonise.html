@@ -1,11 +1,28 @@
 {% extends 'consultantDoctor_base.html' %}
 {% load static %}
 {% block body %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1WFcPx6+ZqVlG4rOJ9gjj40d8H7z4k4vDr3Y5t5+3hV4T2y8G8CkCUXzT7Ms" crossorigin="anonymous"></script>
+
 <style>
-  .hidden {
+    .hidden {
+    display: none;
+  }
+  [data-role="dynamic-fields"] > .form-inline + .form-inline {
+    margin-top: 0.5em;
+  }
+  [data-role="dynamic-fields"] > .form-inline [data-role="add"] {
+    display: none;
+  }
+  [data-role="dynamic-fields"] > .form-inline:last-child [data-role="add"] {
+    display: inline-block;
+  }
+  [data-role="dynamic-fields"] > .form-inline:last-child [data-role="remove"] {
     display: none;
   }
 </style>
+
 <div class="col-md-12">
   <div class="card shadow mb-4">
     <div class="card-header">
@@ -90,9 +107,9 @@
             Prescribe Test
           </button>
           &nbsp; &nbsp;
-          <button type="button" class="btn mb-2 btn-secondary" id="showButton" onclick="toggleForm()">
-            Prescribe Medicine
-          </button>
+         <button type="button" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#prescriptionModal">
+        Prescribe Medicine
+      </button>
  &nbsp; &nbsp;
           {% for test_report in test_reports %}
           <a href="{{ test_report.report.url }}" type="button" class="btn mb-2 btn-info" target="_blank">
@@ -105,7 +122,7 @@
             Previous Health History
           </a>
           &nbsp; &nbsp;
-          <a href="{% url 'consultant_doctor:medicine' %}" type="button" class="btn mb-2 btn-warning">
+          <a href="{% url 'consultant_doctor:prescribe_medicine' appointment_id=ad.appointment_id %}" type="button" class="btn mb-2 btn-warning">
             Medicine
           </a>
         </div>
@@ -114,57 +131,78 @@
   </div>
 </div>
 
-<div class="col-md-12 hidden" id="prescriptionForm">
-  <div class="card shadow mb-4">
-    <div class="card-header">
-      <strong class="card-title">Diagnosis Report</strong>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group mb-3">
-            <label for="simpleinput">Text</label>
-            <input type="text" id="simpleinput" class="form-control" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="example-email">Email</label>
-            <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Email" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="example-password">Password</label>
-            <input type="password" id="example-password" class="form-control" value="password" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="example-palaceholder">Placeholder</label>
-            <input type="text" id="example-palaceholder" class="form-control" placeholder="placeholder" />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group mb-3">
-            <label for="example-helping">Helping text</label>
-            <input type="text" id="example-helping" class="form-control" placeholder="Input with helping text" />
-            <span class="help-block">
-              <small>A block of help text that breaks onto a new line.</small>
-            </span>
-          </div>
-          <div class="form-group mb-3">
-            <label for="example-readonly">Readonly</label>
-            <input type="text" id="example-readonly" class="form-control" readonly="" value="Readonly value" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="example-disable">Disabled</label>
-            <input type="text" class="form-control" id="example-disable" disabled="" value="Disabled value" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="example-static">Static control</label>
-            <p class="form-control-plaintext" id="example-static">email@example.com</p>
-          </div>
-        </div>
+
+<div class="modal fade" id="prescriptionModal" tabindex="-1" role="dialog" aria-labelledby="prescriptionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="prescriptionModalLabel">Prescribe Medicine</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <button class="btn btn-primary" type="submit">Submit</button>
+      <div class="modal-body">
+        <form action="{% url 'consultant_doctor:medicine' %}" method="POST">
+          {% csrf_token %}
+          <div class="table-responsive">
+            <table class="table table-bordered" id="prescription-table">
+              <thead>
+                <tr>
+                  <th>Medicine Name</th>
+                  <th>Feeding Rule</th>
+                  <th>Feeding Time</th>
+                  <th>Dosage</th>
+                  <th>Feeding Days</th>
+                  <th>Add/Remove</th>
+                </tr>
+              </thead>
+              <tbody data-role="dynamic-fields">
+                <tr>
+                  <td class="form-group">
+                    <select class="form-control" name="tablet_name[]">
+                      <option value="">Select Tablet Name</option>
+                      {% for medicine in med %}
+                      <option value="{{ medicine.name }}">{{ medicine.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td class="form-group">
+                    <select class="form-control" name="feeding_rule[]">
+                      <option value="">Select Feeding Rule</option>
+                      <option value="beforeMeals">Before Meal</option>
+                      <option value="afterMeals">After Meal</option>
+                      <option value="withFood">With Food</option>
+                      <option value="emptyStomach">On an Empty Stomach</option>
+                      <option value="withoutFood">Without Food</option>
+                    </select>
+                  </td>
+                  <td class="form-group">
+                    <input type="text" class="form-control" name="feeding_time[]" placeholder="Feeding Time"/>
+                  </td>
+                  <td class="form-group">
+                    <input type="text" class="form-control" name="dosage[]" placeholder="Dosage"/>
+                  </td>
+                  <td class="form-group">
+                    <input type="text" class="form-control" name="feeding_days[]" placeholder="Feeding Days"/>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger" data-role="remove"><span class="fe fe-trash-2"></span></button>
+                    <button type="button" class="btn btn-primary" data-role="add"><span class="fe fe-plus"></span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="text-align: center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
+
+
 
 <div id="prescribeTestModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="prescribeTestModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -211,5 +249,20 @@
       form.classList.add('hidden');
     }
   }
+</script>
+<script>
+  $(function () {
+    $(document).on("click", '[data-role="dynamic-fields"] [data-role="add"]', function (e) {
+      e.preventDefault();
+      var container = $(this).closest('[data-role="dynamic-fields"]');
+      var new_field_group = container.find("tr:last-child").clone();
+      new_field_group.find("input, select").val(""); // Clear input and select values
+      container.append(new_field_group);
+    });
+    $(document).on("click", '[data-role="dynamic-fields"] [data-role="remove"]', function (e) {
+      e.preventDefault();
+      $(this).closest("tr").remove();
+    });
+  });
 </script>
 {% endblock %}

@@ -101,7 +101,7 @@
             <label for="phi">Previous Health Issues</label>
             <input type="text" class="form-control" id="phi" name="phi" placeholder="{{ phr.phi }}" readonly/>
           </div>
-          <a href="/consultant_doctor/consultantDoctor_precribeTest/{{ad.appointment_id}}/" class="btn mb-2 btn-primary" type="button">Prescribe Test</a>
+          <!-- <a href="/consultant_doctor/consultantDoctor_precribeTest/{{ad.appointment_id}}/" class="btn mb-2 btn-primary" type="button">Prescribe Test</a>
           &nbsp; &nbsp;
           <button type="button" class="btn mb-2 btn-secondary" id="showButton" onclick="toggleForm()">Prescribe Medicine</button>
           &nbsp; &nbsp;
@@ -109,7 +109,7 @@
           &nbsp; &nbsp;
           <a href="" type="button" class="btn mb-2 btn-danger">Previous Health History</a>
           &nbsp; &nbsp;
-          <a href="{% url 'consultant_doctor:medicine' %}" type="button" class="btn mb-2 btn-warning">Medicine</a>
+          <a href="{% url 'consultant_doctor:medicine' %}" type="button" class="btn mb-2 btn-warning">Medicine</a> -->
         </div>
       </form>
     </div>
@@ -125,8 +125,38 @@
       <h3 style="text-align: center; color: red">CCHC In Patient Medical Prescription Form</h3>
     </div>
     <div class="card-body">
-      <form action="{% url 'consultant_doctor:medicine' %}" method="POST">
+      <form action="{% url 'consultant_doctor:prescribe_medicine' appointment_id=ad.appointment_id %}" method="POST">
         {% csrf_token %}
+        <input type="hidden" name="appointment_id" value="{{ ad.appointment_id }}">
+        <input type="hidden" name="patient_id" value="{{ pd.patient_id }}">
+        <div class="form-group">
+          <label for="chief_complaints">Chief Complaints</label>
+          <input type="text" class="form-control" id="chief_complaints" name="chief_complaints">
+        </div>
+        <div class="form-group">
+          <label for="clinical_findings">Clinical Findings</label>
+          <textarea class="form-control" id="clinical_findings" name="clinical_findings" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="investigations">Investigations</label>
+          <textarea class="form-control" id="investigations" name="investigations" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="diagnosis">Diagnosis</label>
+          <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="procedures_conducted">Procedures Conducted</label>
+          <input type="text" class="form-control" id="procedures_conducted" name="procedures_conducted">
+        </div>
+        <div class="form-group">
+          <label for="advice_given">Advice Given</label>
+          <textarea class="form-control" id="advice_given" name="advice_given" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="next_visit">Next Visit</label>
+          <input type="date" class="form-control" id="next_visit" name="next_visit">
+        </div>
         <div class="table-responsive">
           <table class="table table-bordered" id="prescription-table">
             <thead>

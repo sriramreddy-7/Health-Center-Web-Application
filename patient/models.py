@@ -455,3 +455,29 @@ class Medicine(models.Model):
     
     def __str__(self):
         return self.name
+    
+class PatientPrescription(models.Model):
+    appointment_id = models.OneToOneField('Visit', on_delete=models.CASCADE, primary_key=True)
+    patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
+    medicines = models.ManyToManyField(Medicine, through='PrescribedMedicine')
+    date_prescribed = models.DateField(auto_now_add=True)
+    chief_complaints = models.CharField(max_length=255)
+    clinical_findings = models.TextField()
+    investigations = models.TextField()
+    diagnosis = models.TextField()
+    procedures_conducted = models.CharField(max_length=255)
+    advice_given = models.TextField()
+    next_visit = models.DateField()
+
+    def __str__(self):
+        return f"{self.patient_id} - {self.date_prescribed}"
+
+class PrescribedMedicine(models.Model):
+    prescription = models.ForeignKey(PatientPrescription, on_delete=models.CASCADE)
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+    dosage = models.CharField(max_length=100)
+    feeding_rule = models.CharField(max_length=100)
+    feeding_time = models.CharField(max_length=100)
+    feeding_days = models.CharField(max_length=100)
+
+    
