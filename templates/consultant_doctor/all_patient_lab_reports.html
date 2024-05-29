@@ -61,7 +61,7 @@
               <td>
                 {% for test_report in patient_test.test_reports.all %}
                   {% if test_report.test == test %}
-                  <a href="{{ test_report.report.url }}" target="_blank" class="btn btn-info btn-sm">
+                  <a href="{{ test_report.report.url }}" target="_blank" class="btn btn-success btn-sm">
                     View Result
                   </a>
                   {% endif %}
