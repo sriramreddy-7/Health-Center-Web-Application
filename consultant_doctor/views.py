@@ -304,3 +304,8 @@ def view_prescription(request, appointment_id):
     }
     return render(request, 'prescription.html', context)
     
+    
+    
+def all_patient_reports(request):
+    patient_reports = PatientPrescription.objects.all()
+    return render(request, 'consultant_doctor/all_patient_reports.html', {'patient_reports': patient_reports})

@@ -1,0 +1,50 @@
+{% extends 'consultantDoctor_base.html' %}
+{% load static %}
+{% block body %}
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-12 my-8">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5 class="card-title">All Patient Reports</h5>
+            <p class="card-text"></p>
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-info">Patient ID</th>
+                  <th class="text-info">Appointment ID</th>
+                  <th class="text-info">Date Prescribed</th>
+                  <th class="text-info">Chief Complaints</th>
+                  <th class="text-info">Clinical Findings</th>
+                  <th class="text-info">Investigations</th>
+                  <th class="text-info">Diagnosis</th>
+                  <th class="text-info">Procedures Conducted</th>
+                  <th class="text-info">Advice Given</th>
+                  <th class="text-info">Next Visit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for report in patient_reports %}
+                <tr>
+                  <td>{{ report.patient_id }}</td>
+                  <td>{{ report.appointment_id.appointment_id }}</td>
+                  <td>{{ report.date_prescribed }}</td>
+                  <td>{{ report.chief_complaints }}</td>
+                  <td>{{ report.clinical_findings }}</td>
+                  <td>{{ report.investigations }}</td>
+                  <td>{{ report.diagnosis }}</td>
+                  <td>{{ report.procedures_conducted }}</td>
+                  <td>{{ report.advice_given }}</td>
+                  <td>{{ report.next_visit }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
