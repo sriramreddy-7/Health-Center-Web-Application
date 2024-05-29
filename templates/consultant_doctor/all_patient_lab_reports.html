@@ -1,0 +1,81 @@
+{% extends 'consultantDoctor_base.html' %}
+{% load static %}
+{% block body %}
+<div class="col-lg-12">
+  {% for patient_test in patient_tests %}
+  <div class="card">
+    <div class="card-header">
+        <div class="table-responsive">
+        <table class="table table-bordered">
+
+          <thead class="table-dark">
+            <tr>
+                <th>Patient ID</th>
+                <th>Appointment ID</th>
+                <th>Token</th>
+                <th>Patient Name</th>
+                <th>Gender</th>
+                <th>DOB | Age</th>
+                <!-- <th>Purpose of Visit</th> -->
+                <th>Visit Date</th>
+            </tr>
+            <tbody>
+            <tr>
+                <td>{{ patient_test.patient_id }}</td>
+                <td>{{ patient_test.appointment_id.appointment_id }}</td>
+                <td>{{ patient_test.appointment_id.patient_token }}</td>
+                <td>{{ patient_test.patient_id.patient_name }}</td>
+                <td> {{ patient_test.patient_id.patient_gender }}</td>
+                <td> {{ patient_test.patient_id.patient_dob }} | {{ patient_test.patient_id.patient_age }}</td>
+                <!-- <td> {{ patient_test.appointment_id.remarks }} </td> -->
+                <td>{{ patient_test.appointment_id.today_date }}</td>
+                </tr>
+            </tbody>
+            </thead>
+            </table>
+            </div>
+
+      <!-- <div>
+        <strong>Appointment ID:</strong> {{ patient_test.appointment_id.appointment_id }}<br />
+        <strong>Patient ID:</strong> {{ patient_test.patient_id }}
+      </div> -->
+
+    </div>
+
+    <div class="card-body">
+
+      <div class="table-responsive">
+        <table class="table table-bordered" style="color:black;">
+          <thead class="table-dark">
+            <tr>
+              <th>S.NO</th>
+              <th>Test Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for test in patient_test.tests.all %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ test.name }}</td>
+              <td>
+                {% for test_report in patient_test.test_reports.all %}
+                  {% if test_report.test == test %}
+                  <a href="{{ test_report.report.url }}" target="_blank" class="btn btn-info btn-sm">
+                    View Result
+                  </a>
+                  {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  {% endfor %}
+
+</div>
+{% endblock %}

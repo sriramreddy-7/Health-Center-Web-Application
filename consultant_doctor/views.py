@@ -309,3 +309,14 @@ def view_prescription(request, appointment_id):
 def all_patient_reports(request):
     patient_reports = PatientPrescription.objects.all()
     return render(request, 'consultant_doctor/all_patient_reports.html', {'patient_reports': patient_reports})
+
+
+"""def all_patient_lab_reports(request):
+    lab_reports = TestReport.objects.all()
+    return render(request, 'consultant_doctor/all_patient_lab_reports.html', {'lab_reports': lab_reports})"""
+
+
+def all_patient_lab_reports(request):
+    # Get all PatientTest instances which have associated TestReports
+    patient_tests = PatientTest.objects.prefetch_related('tests', 'test_reports').all()
+    return render(request, 'consultant_doctor/all_patient_lab_reports.html', {'patient_tests': patient_tests})
