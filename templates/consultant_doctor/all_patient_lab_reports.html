@@ -7,7 +7,6 @@
     <div class="card-header">
         <div class="table-responsive">
         <table class="table table-bordered">
-
           <thead class="table-dark">
             <tr>
                 <th>Patient ID</th>
@@ -16,7 +15,6 @@
                 <th>Patient Name</th>
                 <th>Gender</th>
                 <th>DOB | Age</th>
-                <!-- <th>Purpose of Visit</th> -->
                 <th>Visit Date</th>
             </tr>
             <tbody>
@@ -27,19 +25,17 @@
                 <td>{{ patient_test.patient_id.patient_name }}</td>
                 <td> {{ patient_test.patient_id.patient_gender }}</td>
                 <td> {{ patient_test.patient_id.patient_dob }} | {{ patient_test.patient_id.patient_age }}</td>
-                <!-- <td> {{ patient_test.appointment_id.remarks }} </td> -->
+
                 <td>{{ patient_test.appointment_id.today_date }}</td>
                 </tr>
             </tbody>
             </thead>
             </table>
             </div>
-
       <!-- <div>
         <strong>Appointment ID:</strong> {{ patient_test.appointment_id.appointment_id }}<br />
         <strong>Patient ID:</strong> {{ patient_test.patient_id }}
       </div> -->
-
     </div>
 
     <div class="card-body">
@@ -62,7 +58,7 @@
                 {% for test_report in patient_test.test_reports.all %}
                   {% if test_report.test == test %}
                   <a href="{{ test_report.report.url }}" target="_blank" class="btn btn-success btn-sm">
-                    View Result
+                    View Report
                   </a>
                   {% endif %}
                 {% endfor %}
@@ -76,6 +72,5 @@
   </div>
   <br>
   {% endfor %}
-
 </div>
 {% endblock %}
